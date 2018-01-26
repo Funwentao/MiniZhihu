@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import Header from './Header';
 import BottomBar from './BottomBar';
 import ArticleList from './ArticleList';
-import {WingBlank} from 'antd-mobile';
+import {Tabs} from 'antd-mobile';
 import '../../less/index.less';
 
 
@@ -79,11 +79,20 @@ class Index extends Component{
         }
     }
     render(){
+        const tabs = [
+            {title:'最新'},
+            {title:'最热'}
+        ]
         return(
             <div>
                 <Header/>
-                <ArticleList articles={this.state.articles}/>
-                <BottomBar/>
+                <div className="tab-content">
+                    <Tabs tabs={tabs}>
+                        <ArticleList articles={this.state.articles}/>
+                        <ArticleList articles={this.state.articles}/>
+                    </Tabs>
+                </div>
+                <BottomBar selected="index"/>
             </div>
         )
 

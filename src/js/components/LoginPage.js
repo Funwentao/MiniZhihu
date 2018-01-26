@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 
-import { Tabs,WingBlank,WhiteSpace} from 'antd-mobile';
+import { Tabs,WingBlank} from 'antd-mobile';
 import LoginForm from './LoginForm';
 
 class LoginPage extends Component{

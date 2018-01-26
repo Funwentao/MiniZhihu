@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class ArticleList extends Component{
     static propTypes = {
-        articles: PropTypes.array
+        articles: PropTypes.array.isRequired
     }
     render(){
         return(

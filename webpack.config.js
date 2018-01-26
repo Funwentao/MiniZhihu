@@ -5,7 +5,10 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin")
 module.exports = {
     entry: {
         "login":'./src/js/containers/LoginContainer.js',
-        "index":'./src/js/containers/IndexContainer.js'
+        "index":'./src/js/containers/IndexContainer.js',
+        "like":'./src/js/containers/LikeContainer.js',
+        "collection":'./src/js/containers/CollectionContainer.js',
+        "my":'./src/js/containers/MyContainer.js'
     },
     output: {
         path: __dirname+"/dist",
@@ -34,7 +37,7 @@ module.exports = {
             },
             {
                 test:/\.svg/,
-                loaders: "file-loader"
+                loaders: "svg-sprite-loader"
             }
         ]
     },
@@ -51,6 +54,25 @@ module.exports = {
             template: './template.html',
             chunks:['index']
         }),
+        new HtmlWebpackPlugin({
+            title: '关注',
+            filename: './html/like.html',
+            template: './template.html',
+            chunks:['like']
+        }),
+        new HtmlWebpackPlugin({
+            title: '收藏',
+            filename: './html/collection.html',
+            template: './template.html',
+            chunks:['collection']
+        }),
+        new HtmlWebpackPlugin({
+            title: '收藏',
+            filename: './html/my.html',
+            template: './template.html',
+            chunks:['my']
+        })
+
         //new ExtractTextPlugin('[name].css')
     ]
 }
