@@ -23180,7 +23180,10 @@ var BottomBar = function (_Component) {
                                 height: '22px',
                                 background: 'url(../../src/svg/index-selected.svg) center center /  21px 21px no-repeat'
                             }
-                        })
+                        }),
+                        onPress: function onPress() {
+                            location.href = "index.html";
+                        }
                     }),
                     _react2.default.createElement(_tabBar2.default.Item, { title: '\u5173\u6CE8',
                         selected: this.props.selected === "like" ? true : false,
@@ -23193,7 +23196,10 @@ var BottomBar = function (_Component) {
                                 width: '22px',
                                 height: '22px',
                                 background: 'url(../../src/svg/like-selected.svg) center center /  21px 21px no-repeat' }
-                        })
+                        }),
+                        onPress: function onPress() {
+                            location.href = "like.html";
+                        }
                     }),
                     _react2.default.createElement(_tabBar2.default.Item, { title: '\u6536\u85CF',
                         selected: this.props.selected === "collection" ? true : false,
@@ -23206,7 +23212,10 @@ var BottomBar = function (_Component) {
                                 width: '22px',
                                 height: '22px',
                                 background: 'url(../../src/svg/collection-selected.svg) center center /  21px 21px no-repeat' }
-                        })
+                        }),
+                        onPress: function onPress() {
+                            location.href = "collection.html";
+                        }
                     }),
                     _react2.default.createElement(_tabBar2.default.Item, { title: '\u6211\u7684',
                         selected: this.props.selected === "my" ? true : false,
@@ -23219,7 +23228,10 @@ var BottomBar = function (_Component) {
                                 width: '22px',
                                 height: '22px',
                                 background: 'url(../../src/svg/my-selected.svg) center center /  21px 21px no-repeat' }
-                        })
+                        }),
+                        onPress: function onPress() {
+                            location.href = "my.html";
+                        }
                     })
                 )
             );

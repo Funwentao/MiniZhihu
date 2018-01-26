@@ -67,7 +67,7 @@ module.exports = {
             chunks:['collection']
         }),
         new HtmlWebpackPlugin({
-            title: '收藏',
+            title: '我的',
             filename: './html/my.html',
             template: './template.html',
             chunks:['my']
