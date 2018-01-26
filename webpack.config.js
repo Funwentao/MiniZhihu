@@ -19,7 +19,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['react', 'es2015'],
+                        presets: ['react', 'es2015','stage-0'],
                         plugins: [['import', {"libraryName": "antd-mobile", "style": "css"}]]
                     }
                 }
@@ -31,6 +31,10 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: "style-loader!css-loader!less-loader"
+            },
+            {
+                test:/\.svg/,
+                loaders: "file-loader"
             }
         ]
     },
@@ -47,6 +51,6 @@ module.exports = {
             template: './template.html',
             chunks:['index']
         }),
-        new ExtractTextPlugin('[name].css')
+        //new ExtractTextPlugin('[name].css')
     ]
 }
