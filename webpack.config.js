@@ -8,7 +8,7 @@ module.exports = {
         "index":'./src/js/containers/IndexContainer.js',
         "like":'./src/js/containers/LikeContainer.js',
         "collection":'./src/js/containers/CollectionContainer.js',
-        "my":'./src/js/containers/MyContainer.js'
+        "my":'./src/js/containers/MyContainer.js',
     },
     output: {
         path: __dirname+"/dist",
@@ -44,31 +44,31 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             title: '登录注册',
-            filename: './html/login.html',
+            filename: '../view/login.html',
             template: './template.html',
             chunks:['login']
         }),
         new HtmlWebpackPlugin({
             title: '首页',
-            filename: './html/index.html',
+            filename: '../view/index.html',
             template: './template.html',
             chunks:['index']
         }),
         new HtmlWebpackPlugin({
             title: '关注',
-            filename: './html/like.html',
+            filename: '../view/like.html',
             template: './template.html',
             chunks:['like']
         }),
         new HtmlWebpackPlugin({
             title: '收藏',
-            filename: './html/collection.html',
+            filename: '../view/collection.html',
             template: './template.html',
             chunks:['collection']
         }),
         new HtmlWebpackPlugin({
             title: '我的',
-            filename: './html/my.html',
+            filename: '../view/my.html',
             template: './template.html',
             chunks:['my']
         })
