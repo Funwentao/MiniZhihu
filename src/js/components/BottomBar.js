@@ -45,7 +45,7 @@ class BottomBar extends Component{
                              background: 'url(../../src/svg/like-selected.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
-                         onPress={()=>{location.href="like.html"}}
+                                 onPress={()=>{location.href="like.html"}}
                     />
                     <TabBar.Item title="收藏"
                          selected = {this.props.selected==="collection"?true:false}
@@ -61,7 +61,7 @@ class BottomBar extends Component{
                              background: 'url(../../src/svg/collection-selected.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
-                         onPress={()=>{location.href="collection.html"}}
+                                 onPress={()=>{location.href="collection.html"}}
                     />
                     <TabBar.Item title="我的"
                          selected = {this.props.selected==="my"?true:false}
