@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
+import '../../less/article.less';
 
 class ArticleList extends Component{
     static propTypes = {

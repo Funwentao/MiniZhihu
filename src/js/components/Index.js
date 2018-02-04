@@ -5,7 +5,6 @@ import ArticleList from './ArticleList';
 import {Tabs} from 'antd-mobile';
 import '../../less/index.less';
 
-
 class Index extends Component{
     constructor(){
         super();

@@ -100,13 +100,15 @@ class LoginPage extends Component{
                                password={this.state.loginPassword}
                                usernameChangeHandler={this.loginUsernameChangeHandler}
                                passwordChangeHandler={this.loginPasswordChangeHandler}
-                               clickHandler={this.loginAction}/>
+                               clickHandler={this.loginAction}
+                    />
                     <LoginForm name="注册"
                                username={this.state.signUsername}
                                password={this.state.signPassword}
                                usernameChangeHandler={this.signUsernameChangeHandler}
                                passwordChangeHandler={this.signPasswordChangeHandler}
-                               clickHandler={this.signupAction}/>
+                               clickHandler={this.signupAction}
+                    />
                 </Tabs>
             </WingBlank>
         )
