@@ -13,11 +13,13 @@ const UserSchema = new Schema({
         trim: true
     },
     like:{
-        type: String,
-        trim: true
+        type: Array
+    },
+    beLiked:{
+        type:Array
     },
     collections:{
-        type:Array,
+        type:Array
     },
     headPic:{
         type:String,

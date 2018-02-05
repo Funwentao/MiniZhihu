@@ -49,6 +49,13 @@ class LoginPage extends Component{
     signupAction() {
         const url = `/api/signup`;
         const that = this;
+        if(this.state.signPassword===''||this.state.signUsername===''){
+            this.setState({
+                show:true,
+                information:'注册信息未填写完整！'
+            })
+            return;
+        }
         fetch(url, {
             method: 'POST',
             // 设置这个header，才能正确parse
@@ -78,6 +85,13 @@ class LoginPage extends Component{
     loginAction() {
         const url = `/api/login`;
         const that = this;
+        if(this.state.loginPassword===''||this.state.loginUsername===''){
+            this.setState({
+                show:true,
+                information:'登录信息未填写完整！'
+            })
+            return;
+        }
         fetch(url, {
             method: 'POST',
             // 设置这个header，才能正确parse

@@ -13,7 +13,6 @@ export default function (Router) {
         '/signup',
         async(ctx,next) =>{
             const {username, password} = ctx.request.body;
-            console.log(username,password);
             const user = await UserModel.findOne({username}).exec();
             if(user){
                 ctx.body = {status:0,msg:'用户已存在'};
@@ -28,7 +27,7 @@ export default function (Router) {
         '/login',
         async (ctx, next) => {
             const { username, password } = ctx.request.body;
-            const user = await UserModel.findOne({ username }).exec()
+            const user = await UserModel.findOne({ username }).exec();
             if(!user) {
                 ctx.body = { status: 0, msg: '用户不存在' }
             } else {
@@ -49,16 +48,51 @@ export default function (Router) {
     router.post(
         '/upload',
         async(ctx,next) => {
-            const file = ctx.request.body.files.file
-            console.log(ctx.request.body.files.file);
-            console.log(ctx.request.body.files.file.name);
+            const file = ctx.request.body.files.file;
             const path = '../src/img/';
             const reader = fs.createReadStream(file.path);
-            const writer = fs.createWriteStream(path + file.name);
+            let i = file.name.lastIndexOf('.');
+            let fileType = file.name.slice(i-1);
+            let filename = new Date().getTime()+fileType;
+            const writer = fs.createWriteStream(path + filename);
             await reader.pipe(writer);
-            ctx.body = { status: 1, msg: '上传成功',path:file.name};
+            ctx.body = { status: 1, msg: '上传成功',path:filename};
         }
-    )
-    return router.routes();
+    );
 
+    router.post(
+        '/updateInformation',
+        async(ctx,next) => {
+            const {pic,oldName,newName} = ctx.request.body;
+            const password = ctx.request.body.password;
+            const user = await UserModel.findOne({ username:oldName }).exec();
+            user.username = newName;
+            user.headPic = pic;
+            if(!password.trim()){
+                user.password = user.password;
+            }else{
+                user.password = password;
+            }
+            await user.save();
+            ctx.body={status:1,msg:'更新成功'};
+        }
+    );
+
+    router.get(
+        '/getInformation',
+        async(ctx,next) => {
+            const {username} = ctx.request.query;
+            const user = await UserModel.findOne({ username }).exec();
+            const {headPic,articles,question,like,beLiked,collections,answer} = user;
+            const al= articles.length,
+                ql = question.length,
+                ll = like.length,
+                bl = beLiked.length,
+                anl = answer.length,
+                cl = collections.length;
+            ctx.body={status:1,headPic,username,al,ql,ll,bl,cl,anl};
+        }
+    );
+
+    return router.routes();
 }

@@ -19,65 +19,65 @@ class BottomBar extends Component{
                          icon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/index.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/index.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
                          selectedIcon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/index-selected.svg) center center /  21px 21px no-repeat'
+                             background: 'url(../../svg/index-selected.svg) center center /  21px 21px no-repeat'
                          }}
                          />
                          }
-                         onPress={()=>{location.href="index.html"}}
+                         onPress={()=>{location.href="/index"}}
                     />
                     <TabBar.Item title="关注"
                          selected = {this.props.selected==="like"?true:false}
                          icon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/like.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/like.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
                          selectedIcon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/like-selected.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/like-selected.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
-                                 onPress={()=>{location.href="like.html"}}
+                                 onPress={()=>{location.href="/like"}}
                     />
                     <TabBar.Item title="收藏"
                          selected = {this.props.selected==="collection"?true:false}
                          icon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/collection.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/collection.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
                          selectedIcon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/collection-selected.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/collection-selected.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
-                                 onPress={()=>{location.href="collection.html"}}
+                                 onPress={()=>{location.href="/collection"}}
                     />
                     <TabBar.Item title="我的"
                          selected = {this.props.selected==="my"?true:false}
                          icon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/my.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/my.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
                          selectedIcon={<div style={{
                              width: '22px',
                              height: '22px',
-                             background: 'url(../../src/svg/my-selected.svg) center center /  21px 21px no-repeat' }}
+                             background: 'url(../../svg/my-selected.svg) center center /  21px 21px no-repeat' }}
                          />
                          }
-                         onPress={()=>{location.href="my.html"}}
+                         onPress={()=>{location.href="/my"}}
                     />
                 </TabBar>
             </div>
