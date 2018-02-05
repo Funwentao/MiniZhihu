@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import parser from 'koa-bodyparser';
+import body from 'koa-body';
 import cors from 'koa2-cors';
 import views from 'koa-views';
 import staticServer from 'koa-static';
@@ -15,7 +16,8 @@ const app = new Koa();
 
 app
     .use(cors())
-    .use(parser())
+    .use(body({ multipart: true }))
+    .use(parser({ multipart: true }))
     .use(views('../view'))
     .use(api(Router))
     .use(routes(Router))
@@ -30,7 +32,7 @@ app
         console.error('ERROR:',e);
     }
 
-    app.listen(3000,'localhost',()=>{
+    app.listen(3000,'172.29.108.39',()=>{
         console.log('server running on port 3000');
     })
 

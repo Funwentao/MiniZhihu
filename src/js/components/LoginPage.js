@@ -2,7 +2,10 @@ import React,{Component} from 'react';
 
 import { Tabs,WingBlank} from 'antd-mobile';
 import LoginForm from './LoginForm';
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch';
+import Layer from './Layer';
+
+
 
 class LoginPage extends Component{
     constructor(){
@@ -11,7 +14,9 @@ class LoginPage extends Component{
             signUsername:'',
             signPassword:'',
             loginUsername:'',
-            loginPassword:''
+            loginPassword:'',
+            show:false,
+            information:'',
         };
         this.signUsernameChangeHandler = this.signUsernameChangeHandler.bind(this);
         this.loginUsernameChangeHandler = this.loginUsernameChangeHandler.bind(this);
@@ -19,6 +24,7 @@ class LoginPage extends Component{
         this.loginPasswordChangeHandler = this.loginPasswordChangeHandler.bind(this);
         this.signupAction = this.signupAction.bind(this);
         this.loginAction = this.loginAction.bind(this);
+        this.closeHandler = this.closeHandler.bind(this);
     }
     signUsernameChangeHandler(e){
         this.setState({
@@ -41,7 +47,8 @@ class LoginPage extends Component{
         })
     }
     signupAction() {
-        const url = `/api/signup`
+        const url = `/api/signup`;
+        const that = this;
         fetch(url, {
             method: 'POST',
             // 设置这个header，才能正确parse
@@ -56,11 +63,21 @@ class LoginPage extends Component{
         }).then(function(response) {
             return response.json();
         }).then(function(data) {
-            console.log(data);
+            that.setState({
+                show:true,
+                information:data.msg
+            })
+        })
+    }
+    closeHandler(){
+        console.log(1);
+        this.setState({
+            show:false
         })
     }
     loginAction() {
-        const url = `/api/login`
+        const url = `/api/login`;
+        const that = this;
         fetch(url, {
             method: 'POST',
             // 设置这个header，才能正确parse
@@ -82,7 +99,11 @@ class LoginPage extends Component{
                 location.href = '/index';
             }
             else {
-                console.log( data )
+                console.log(data)
+                that.setState({
+                    show:true,
+                    information:data.msg
+                })
             }
 
         })
@@ -93,24 +114,33 @@ class LoginPage extends Component{
             {title:'注册'}
         ]
         return(
-            <WingBlank>
-                <Tabs tabs={tabs}>
-                    <LoginForm name="登录"
-                               username={this.state.loginUsername}
-                               password={this.state.loginPassword}
-                               usernameChangeHandler={this.loginUsernameChangeHandler}
-                               passwordChangeHandler={this.loginPasswordChangeHandler}
-                               clickHandler={this.loginAction}
-                    />
-                    <LoginForm name="注册"
-                               username={this.state.signUsername}
-                               password={this.state.signPassword}
-                               usernameChangeHandler={this.signUsernameChangeHandler}
-                               passwordChangeHandler={this.signPasswordChangeHandler}
-                               clickHandler={this.signupAction}
-                    />
-                </Tabs>
-            </WingBlank>
+            <div>
+                <WingBlank>
+                    <Tabs tabs={tabs}>
+                        <LoginForm name="登录"
+                                   username={this.state.loginUsername}
+                                   password={this.state.loginPassword}
+                                   usernameChangeHandler={this.loginUsernameChangeHandler}
+                                   passwordChangeHandler={this.loginPasswordChangeHandler}
+                                   clickHandler={this.loginAction}
+                        />
+                        <LoginForm name="注册"
+                                   username={this.state.signUsername}
+                                   password={this.state.signPassword}
+                                   usernameChangeHandler={this.signUsernameChangeHandler}
+                                   passwordChangeHandler={this.signPasswordChangeHandler}
+                                   clickHandler={this.signupAction}
+                        />
+                    </Tabs>
+                </WingBlank>
+                {
+                    this.state.show&&<Layer closeHandler={this.closeHandler}>
+                        <div className="test"
+                             dangerouslySetInnerHTML={{__html: this.state.information}}></div>
+                    </Layer>
+                }
+            </div>
+
         )
     }
 }

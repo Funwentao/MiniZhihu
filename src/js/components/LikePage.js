@@ -10,18 +10,18 @@ class LikePage extends Component{
             likes:[{
                 pic:'/src/img/810438.jpg',
                 username:'funwt',
-                like:0,
+                like:10,
+                beLiked:0
+            },{
+                pic:'/src/img/810438.jpg',
+                username:'funwt',
+                like:10,
                 beLiked:0
             },{
                 pic:'/src/img/810438.jpg',
                 username:'funwt',
                 like:0,
-                beLiked:0
-            },{
-                pic:'/src/img/810438.jpg',
-                username:'funwt',
-                like:0,
-                beLiked:0
+                beLiked:10
             }]
         }
     }
