@@ -1,31 +1,18 @@
 import React,{Component} from 'react';
 import BottomBar from './BottomBar';
 import '../../less/like.less';
+import EmptyContent from './EmptyContent';
 
 
 class LikePage extends Component{
     constructor(){
         super();
         this.state = {
-            likes:[{
-                pic:'/src/img/810438.jpg',
-                username:'funwt',
-                like:10,
-                beLiked:0
-            },{
-                pic:'/src/img/810438.jpg',
-                username:'funwt',
-                like:10,
-                beLiked:0
-            },{
-                pic:'/src/img/810438.jpg',
-                username:'funwt',
-                like:0,
-                beLiked:10
-            }]
+            likes:[]
         }
     }
     render(){
+        const {length} = this.state.likes;
         return(
             <div>
                 {
@@ -48,6 +35,7 @@ class LikePage extends Component{
                         )
                     })
                 }
+                {!length&&<EmptyContent/>}
                 <BottomBar selected="like"/>
             </div>
         )
