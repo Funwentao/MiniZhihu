@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-const ArticleSchema = new Schema({
+const QuestionSchema = new Schema({
     title: {
         type: String,
         index: true,
@@ -17,17 +17,12 @@ const ArticleSchema = new Schema({
         required: true,
         trim: true
     },
-    agreement:{
-        type:Number,
-        default:0,
+    answer:{
+        type:Array,
+        default:[],
         required:true
-    },
-    comment:{
-      type:Array,
-      default:[],
-      required:true
     },
     create_time: Date
 })
 
-export default mongoose.model('Article', ArticleSchema)
+export default mongoose.model('Question', QuestionSchema)

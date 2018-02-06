@@ -4,8 +4,6 @@ import {List,Button} from 'antd-mobile';
 import '../../less/my.less';
 import Layer from './Layer';
 import fetch from 'isomorphic-fetch';
-//import Promise from 'pinkie-promise';
-//import 'whatwg-fetch';
 
 
 class MyPage extends Component{
@@ -149,7 +147,7 @@ class MyPage extends Component{
                 <div className="information">
                     <List>
                         <List.Item>原创文章<span  className="right">{this.state.al}</span></List.Item>
-                        <List.Item>原创问题<span  className="right">{this.state.ql}</span></List.Item>
+                        <List.Item>我的提问<span  className="right">{this.state.ql}</span></List.Item>
                         <List.Item>我的关注<span  className="right">{this.state.like}</span></List.Item>
                         <List.Item>我的回答<span  className="right">{this.state.anl}</span></List.Item>
                         <List.Item>我的收藏<span  className="right">{this.state.cl}</span></List.Item>

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import UserModel from '../db/schema/user';
+import QuestionModel from '../db/schema/question';
 import fs from 'fs';
 
 
@@ -78,6 +79,20 @@ export default function (Router) {
         }
     );
 
+
+    router.post(
+        '/publishQuestion',
+        async(ctx,next) => {
+            const {author,title,content} = ctx.request.body;
+            console.log({author,title,content});
+            const question = new QuestionModel({author,title,content});
+            await question.save();
+            ctx.body={status:1,msg:'发布成功'};
+
+        }
+    );
+
+
     router.get(
         '/getInformation',
         async(ctx,next) => {
@@ -93,6 +108,8 @@ export default function (Router) {
             ctx.body={status:1,headPic,username,al,ql,ll,bl,cl,anl};
         }
     );
+
+
 
     return router.routes();
 }

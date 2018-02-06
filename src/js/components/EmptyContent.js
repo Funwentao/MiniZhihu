@@ -7,7 +7,6 @@ export default function EmtpyContent() {
         <div className="empty-content">
             <ReactSVG
                 path="../../svg/empty.svg"
-                callback={svg => console.log(svg)}
                 className="empty-svg"
             />
             <p>暂无内容...</p>

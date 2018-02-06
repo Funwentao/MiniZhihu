@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 219);
+/******/ 	return __webpack_require__(__webpack_require__.s = 222);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -23780,7 +23780,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(160);
+var _server = __webpack_require__(162);
 
 var _server2 = _interopRequireDefault(_server);
 
@@ -23794,7 +23794,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // See: https://github.com/webpack/react-starter/issues/37
 var isBrowser = typeof window !== 'undefined';
-var SVGInjector = isBrowser ? __webpack_require__(163) : undefined;
+var SVGInjector = isBrowser ? __webpack_require__(165) : undefined;
 
 var ReactSVG = function (_React$Component) {
   _inherits(ReactSVG, _React$Component);
@@ -23893,22 +23893,24 @@ exports.default = ReactSVG;
 module.exports = exports['default'];
 
 /***/ }),
-/* 160 */
+/* 160 */,
+/* 161 */,
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(161);
+  module.exports = __webpack_require__(163);
 } else {
-  module.exports = __webpack_require__(162);
+  module.exports = __webpack_require__(164);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 161 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23957,7 +23959,7 @@ d){if(null!=d.__html){d=d.__html;break a}}else if(d=f.children,"string"===typeof
 
 
 /***/ }),
-/* 162 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26509,7 +26511,7 @@ module.exports = server_browser;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 163 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -26980,7 +26982,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 164 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26999,7 +27001,7 @@ var _reactSvg = __webpack_require__(159);
 
 var _reactSvg2 = _interopRequireDefault(_reactSvg);
 
-__webpack_require__(165);
+__webpack_require__(167);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27009,9 +27011,6 @@ function EmtpyContent() {
         { className: 'empty-content' },
         _react2.default.createElement(_reactSvg2.default, {
             path: '../../svg/empty.svg',
-            callback: function callback(svg) {
-                return console.log(svg);
-            },
             className: 'empty-svg'
         }),
         _react2.default.createElement(
@@ -27023,13 +27022,13 @@ function EmtpyContent() {
 }
 
 /***/ }),
-/* 165 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(168);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -27054,7 +27053,7 @@ if(false) {
 }
 
 /***/ }),
-/* 166 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)(false);
@@ -27068,8 +27067,6 @@ exports.push([module.i, ".empty-content {\n  text-align: center;\n  margin-top: 
 
 
 /***/ }),
-/* 167 */,
-/* 168 */,
 /* 169 */,
 /* 170 */,
 /* 171 */,
@@ -27262,7 +27259,10 @@ exports.push([module.i, ".article-list {\n  margin-bottom: 60px;\n}\n.article-li
 /* 216 */,
 /* 217 */,
 /* 218 */,
-/* 219 */
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27276,7 +27276,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _CollectionPage = __webpack_require__(220);
+var _CollectionPage = __webpack_require__(223);
 
 var _CollectionPage2 = _interopRequireDefault(_CollectionPage);
 
@@ -27285,7 +27285,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_CollectionPage2.default, null), document.getElementById("app"));
 
 /***/ }),
-/* 220 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27309,7 +27309,7 @@ var _ArticleList = __webpack_require__(187);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _EmptyContent = __webpack_require__(164);
+var _EmptyContent = __webpack_require__(166);
 
 var _EmptyContent2 = _interopRequireDefault(_EmptyContent);
 
