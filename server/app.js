@@ -32,7 +32,7 @@ app
         console.error('ERROR:',e);
     }
 
-    app.listen(3000,'172.29.108.39',()=>{
+    app.listen(3000,'localhost',()=>{
         console.log('server running on port 3000');
     })
 
