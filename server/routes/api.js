@@ -116,7 +116,7 @@ export default function (Router) {
         async(ctx,next)=>{
             const {username} = ctx.request.query;
             const questions = await QuestionModel.find({author:username}).exec();
-            ctx.body = {status:1,questions};
+            ctx.body = {status:1,questions:questions.reverse()};
         }
     );
 
@@ -125,7 +125,7 @@ export default function (Router) {
         async(ctx,next)=>{
             const {username} = ctx.request.query;
             const articles = await ArticleModel.find({author:username}).exec();
-            ctx.body = {status:1,articles};
+            ctx.body = {status:1,articles:articles.reverse()};
         }
     );
 
@@ -139,6 +139,28 @@ export default function (Router) {
             await UserModel.update({username:author},{$push:{articles:article._id}});
             ctx.body={status:1,msg:'发布成功'};
         }
-    )
+    );
+
+    router.get(
+        '/getAll',
+        async(ctx,next)=>{
+            const articles = await ArticleModel.find();
+            const questions = await QuestionModel.find();
+            let i = 0,j=0,all=[];
+            while(i<articles.length&&j<questions.length){
+                if(articles[i].create_time>questions[j].create_time){
+                    all.push(questions[j++]);
+                }else{
+                    all.push(articles[i++]);
+                }
+            }
+            if(i!==articles.length){
+                all.push(...articles.slice(i));
+            }else{
+                all.push(...questions.slice(j))
+            }
+            ctx.body = {status:1,all:all.reverse()};
+        }
+    );
     return router.routes();
 }

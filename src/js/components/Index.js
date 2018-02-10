@@ -18,22 +18,14 @@ class Index extends Component{
             title:'',
             content:'',
             information:'',
-            articles:[
-                {
-                    title:"这个优秀的演员终于红了",
-                    content:"这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了",
-                    type:"文章",
-                    time:"2018-1-26 1:31",
-                    agreement:4682,
-                    comments:465
-                }
-            ]
+            all:[]
         }
         this.clickHandler = this.clickHandler.bind(this);
         this.contentChange = this.contentChange.bind(this);
         this.titleChange = this.titleChange.bind(this);
         this.publishHandler = this.publishHandler.bind(this);
         this.closeHandler = this.closeHandler.bind(this);
+        this._loadContent = this._loadContent.bind(this);
     }
     clickHandler(){
         this.setState({
@@ -73,6 +65,7 @@ class Index extends Component{
                     information:data.msg,
                     show:true
                 })
+                that._loadContent();
             }
         })
     }
@@ -91,19 +84,40 @@ class Index extends Component{
             show:false
         })
     }
+    _loadContent() {
+        const that = this;
+        const url = '/api/getAll';
+        fetch(url, {
+            method: 'GET',
+            // 设置这个header，才能正确parse
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors'
+        }).then(function (response) {
+            return response.json()
+        }).then(function (data) {
+            that.setState({
+                all:data.all
+            })
+        })
+    }
+    componentDidMount(){
+        this._loadContent();
+    }
     render(){
         const tabs = [
             {title:'最新'},
             {title:'最热'}
         ];
-        const {length} = this.state.articles;
+        const {length} = this.state.all;
         return(
             <div>
                 <Header clickHandler={this.clickHandler}/>
                 <div className="tab-content">
                     <Tabs tabs={tabs}>
-                        {length?<ArticleList articles={this.state.articles}/>:<EmptyContent/>}
-                        {length?<ArticleList articles={this.state.articles}/>:<EmptyContent/>}
+                        {length?<ArticleList articles={this.state.all}/>:<EmptyContent/>}
+                        {length?<ArticleList articles={this.state.all}/>:<EmptyContent/>}
                     </Tabs>
                 </div>
                 <BottomBar selected="index"/>

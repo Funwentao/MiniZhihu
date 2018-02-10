@@ -28074,20 +28074,14 @@ var Index = function (_Component) {
             title: '',
             content: '',
             information: '',
-            articles: [{
-                title: "这个优秀的演员终于红了",
-                content: "这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了",
-                type: "文章",
-                time: "2018-1-26 1:31",
-                agreement: 4682,
-                comments: 465
-            }]
+            all: []
         };
         _this.clickHandler = _this.clickHandler.bind(_this);
         _this.contentChange = _this.contentChange.bind(_this);
         _this.titleChange = _this.titleChange.bind(_this);
         _this.publishHandler = _this.publishHandler.bind(_this);
         _this.closeHandler = _this.closeHandler.bind(_this);
+        _this._loadContent = _this._loadContent.bind(_this);
         return _this;
     }
 
@@ -28133,6 +28127,7 @@ var Index = function (_Component) {
                         information: data.msg,
                         show: true
                     });
+                    that._loadContent();
                 }
             });
         }
@@ -28158,10 +28153,35 @@ var Index = function (_Component) {
             });
         }
     }, {
+        key: '_loadContent',
+        value: function _loadContent() {
+            var that = this;
+            var url = '/api/getAll';
+            (0, _isomorphicFetch2.default)(url, {
+                method: 'GET',
+                // 设置这个header，才能正确parse
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                that.setState({
+                    all: data.all
+                });
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._loadContent();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var tabs = [{ title: '最新' }, { title: '最热' }];
-            var length = this.state.articles.length;
+            var length = this.state.all.length;
 
             return _react2.default.createElement(
                 'div',
@@ -28173,8 +28193,8 @@ var Index = function (_Component) {
                     _react2.default.createElement(
                         _tabs2.default,
                         { tabs: tabs },
-                        length ? _react2.default.createElement(_ArticleList2.default, { articles: this.state.articles }) : _react2.default.createElement(_EmptyContent2.default, null),
-                        length ? _react2.default.createElement(_ArticleList2.default, { articles: this.state.articles }) : _react2.default.createElement(_EmptyContent2.default, null)
+                        length ? _react2.default.createElement(_ArticleList2.default, { articles: this.state.all }) : _react2.default.createElement(_EmptyContent2.default, null),
+                        length ? _react2.default.createElement(_ArticleList2.default, { articles: this.state.all }) : _react2.default.createElement(_EmptyContent2.default, null)
                     )
                 ),
                 _react2.default.createElement(_BottomBar2.default, { selected: 'index' }),
