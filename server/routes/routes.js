@@ -36,7 +36,19 @@ export default function (Router) {
         await ctx.render('my');
     });
 
+    /**
+     * 我的提问
+     */
+    router.get('/questions',async(ctx,next) => {
+        await ctx.render('questions');
+    });
 
+    /**
+     * 我的文章
+     */
+    router.get('/articles',async(ctx,next) => {
+        await ctx.render('articles');
+    });
 
     return router.routes();
 }

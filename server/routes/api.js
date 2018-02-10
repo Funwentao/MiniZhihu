@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import UserModel from '../db/schema/user';
 import QuestionModel from '../db/schema/question';
+import ArticleModel from '../db/schema/article';
 import fs from 'fs';
 
 
@@ -110,6 +111,34 @@ export default function (Router) {
     );
 
 
+    router.get(
+        '/getQuestions',
+        async(ctx,next)=>{
+            const {username} = ctx.request.query;
+            const questions = await QuestionModel.find({author:username}).exec();
+            ctx.body = {status:1,questions};
+        }
+    );
 
+    router.get(
+        '/getArticles',
+        async(ctx,next)=>{
+            const {username} = ctx.request.query;
+            const articles = await ArticleModel.find({author:username}).exec();
+            ctx.body = {status:1,articles};
+        }
+    );
+
+
+    router.post(
+        '/publishArticle',
+        async(ctx,next)=>{
+            const {author,title,content} = ctx.request.body;
+            const article = new ArticleModel({author,title,content});
+            await article.save();
+            await UserModel.update({username:author},{$push:{articles:article._id}});
+            ctx.body={status:1,msg:'发布成功'};
+        }
+    )
     return router.routes();
 }

@@ -34,7 +34,10 @@ const UserSchema = new Schema({
     answer:{
         type:Array
     },
-    create_time: Date
+    create_time: {
+        type: Date,
+        default: new Date()
+    }
 })
 
 export default mongoose.model('User', UserSchema)

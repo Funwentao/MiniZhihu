@@ -9,6 +9,8 @@ module.exports = {
         "like":'./src/js/containers/LikeContainer.js',
         "collection":'./src/js/containers/CollectionContainer.js',
         "my":'./src/js/containers/MyContainer.js',
+        'questions':'./src/js/containers/MyQuestions.js',
+        'articles':'./src/js/containers/MyArticles.js'
     },
     output: {
         path: __dirname+"/dist",
@@ -72,8 +74,19 @@ module.exports = {
             filename: '../view/my.html',
             template: './template.html',
             chunks:['my']
+        }),
+        new HtmlWebpackPlugin({
+            title: '我的提问',
+            filename: '../view/questions.html',
+            template: './template.html',
+            chunks:['questions']
+        }),
+        new HtmlWebpackPlugin({
+            title: '我的文章',
+            filename: '../view/articles.html',
+            template: './template.html',
+            chunks:['articles']
         })
-
         //new ExtractTextPlugin('[name].css')
     ]
 }

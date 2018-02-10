@@ -26,12 +26,15 @@ const ArticleSchema = new Schema({
         default:0,
         required:true
     },
-    comment:{
+    comments:{
       type:Array,
       default:[],
       required:true
     },
-    create_time: Date
+    create_time:{
+        type: Date,
+        default: new Date()
+    }
 })
 
 export default mongoose.model('Article', ArticleSchema)

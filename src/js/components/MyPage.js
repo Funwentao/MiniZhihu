@@ -146,11 +146,11 @@ class MyPage extends Component{
                 </div>
                 <div className="information">
                     <List>
-                        <List.Item>原创文章<span  className="right">{this.state.al}</span></List.Item>
-                        <List.Item>我的提问<span  className="right">{this.state.ql}</span></List.Item>
-                        <List.Item>我的关注<span  className="right">{this.state.like}</span></List.Item>
-                        <List.Item>我的回答<span  className="right">{this.state.anl}</span></List.Item>
-                        <List.Item>我的收藏<span  className="right">{this.state.cl}</span></List.Item>
+                        <List.Item onClick={()=>location.href='/articles'}>原创文章<span  className="right">{this.state.al}</span></List.Item>
+                        <List.Item onClick={()=>location.href='/questions'}>我的提问<span  className="right">{this.state.ql}</span></List.Item>
+                        <List.Item onClick={()=>location.href='/like'}>我的关注<span  className="right">{this.state.like}</span></List.Item>
+                        <List.Item onClick={()=>location.href='/answers'}>我的回答<span  className="right">{this.state.anl}</span></List.Item>
+                        <List.Item onClick={()=>location.href='/collection'}>我的收藏<span  className="right">{this.state.cl}</span></List.Item>
                     </List>
                 </div>
                 <div className="logout" onClick={this.logoutHandler}>

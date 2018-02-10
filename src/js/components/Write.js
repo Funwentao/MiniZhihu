@@ -12,16 +12,16 @@ class Write extends  Component{
             <div id="write-content">
                 <div className="header">
                     <a href="javascript:;" className="blue" id="cancel" onClick={this.props.clickHandler}>取消</a>
-                    <span className="tips">提问</span>
+                    <span className="tips">{this.props.tips}</span>
                     <a href="javascript:;" className="blue" id="publish" onClick={this.props.publishHandler}>发布</a>
                 </div>
                 <input type="text"
                        id="title"
-                       placeholder="输入问题并以问号结尾"
+                       placeholder={this.props.placeholder1}
                        value={this.props.title}
                        onChange={this.props.titleChange}/>
-                <textarea placeholder="问题描述(选填)"
-                          id="content" v
+                <textarea placeholder={this.props.palceholder}
+                          id="content"
                           value={this.props.content}
                           onChange={this.props.contentChange}/>
             </div>

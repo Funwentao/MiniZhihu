@@ -26,7 +26,10 @@ const QuestionSchema = new Schema({
         default:[],
         required:true
     },
-    create_time: Date
+    create_time: {
+        type: Date,
+        default: new Date()
+    }
 })
 
 export default mongoose.model('Question', QuestionSchema)
