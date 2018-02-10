@@ -23780,7 +23780,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(162);
+var _server = __webpack_require__(165);
 
 var _server2 = _interopRequireDefault(_server);
 
@@ -23794,7 +23794,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // See: https://github.com/webpack/react-starter/issues/37
 var isBrowser = typeof window !== 'undefined';
-var SVGInjector = isBrowser ? __webpack_require__(165) : undefined;
+var SVGInjector = isBrowser ? __webpack_require__(168) : undefined;
 
 var ReactSVG = function (_React$Component) {
   _inherits(ReactSVG, _React$Component);
@@ -23895,22 +23895,25 @@ module.exports = exports['default'];
 /***/ }),
 /* 160 */,
 /* 161 */,
-/* 162 */
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(163);
+  module.exports = __webpack_require__(166);
 } else {
-  module.exports = __webpack_require__(164);
+  module.exports = __webpack_require__(167);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23959,7 +23962,7 @@ d){if(null!=d.__html){d=d.__html;break a}}else if(d=f.children,"string"===typeof
 
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26511,7 +26514,7 @@ module.exports = server_browser;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -26982,7 +26985,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27001,7 +27004,7 @@ var _reactSvg = __webpack_require__(159);
 
 var _reactSvg2 = _interopRequireDefault(_reactSvg);
 
-__webpack_require__(167);
+__webpack_require__(170);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27022,13 +27025,13 @@ function EmtpyContent() {
 }
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(168);
+var content = __webpack_require__(171);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -27053,7 +27056,7 @@ if(false) {
 }
 
 /***/ }),
-/* 168 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)(false);
@@ -27067,9 +27070,6 @@ exports.push([module.i, ".empty-content {\n  text-align: center;\n  margin-top: 
 
 
 /***/ }),
-/* 169 */,
-/* 170 */,
-/* 171 */,
 /* 172 */,
 /* 173 */,
 /* 174 */,
@@ -27180,6 +27180,7 @@ var ArticleList = function (_Component) {
 }(_react.Component);
 
 ArticleList.propTypes = {
+
     articles: _propTypes2.default.array.isRequired
 };
 exports.default = ArticleList;
@@ -27309,7 +27310,7 @@ var _ArticleList = __webpack_require__(187);
 
 var _ArticleList2 = _interopRequireDefault(_ArticleList);
 
-var _EmptyContent = __webpack_require__(166);
+var _EmptyContent = __webpack_require__(169);
 
 var _EmptyContent2 = _interopRequireDefault(_EmptyContent);
 
@@ -27330,16 +27331,14 @@ var CollectionPage = function (_Component) {
         var _this = _possibleConstructorReturn(this, (CollectionPage.__proto__ || Object.getPrototypeOf(CollectionPage)).call(this));
 
         _this.state = {
-            articles: [
-                // {
-                //     title:"这个优秀的演员终于红了",
-                //     content:"这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了",
-                //     type:"文章",
-                //     time:"2018-1-26 1:31",
-                //     agreement:4682,
-                //     comments:465
-                // }
-            ]
+            articles: [{
+                title: "这个优秀的演员终于红了",
+                content: "这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了",
+                type: "文章",
+                time: "2018-1-26 1:31",
+                agreement: 4682,
+                comments: 465
+            }]
         };
         return _this;
     }

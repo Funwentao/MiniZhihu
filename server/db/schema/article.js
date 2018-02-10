@@ -7,6 +7,10 @@ const ArticleSchema = new Schema({
         required: true,
         trim: true
     },
+    type:{
+        type:String,
+        default:'article'
+    },
     author:{
         type:String,
         required:true,

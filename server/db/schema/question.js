@@ -7,6 +7,10 @@ const QuestionSchema = new Schema({
         required: true,
         trim: true
     },
+    type:{
+        type:String,
+        default:'question'
+    },
     author:{
         type:String,
         required:true,

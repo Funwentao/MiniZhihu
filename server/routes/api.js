@@ -84,9 +84,9 @@ export default function (Router) {
         '/publishQuestion',
         async(ctx,next) => {
             const {author,title,content} = ctx.request.body;
-            console.log({author,title,content});
             const question = new QuestionModel({author,title,content});
             await question.save();
+            await UserModel.update({username:author},{$push:{question:question._id}});
             ctx.body={status:1,msg:'发布成功'};
 
         }

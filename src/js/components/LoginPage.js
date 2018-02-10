@@ -77,7 +77,6 @@ class LoginPage extends Component{
         })
     }
     closeHandler(){
-        console.log(1);
         this.setState({
             show:false
         })

@@ -4,6 +4,7 @@ import '../../less/article.less';
 
 class ArticleList extends Component{
     static propTypes = {
+
         articles: PropTypes.array.isRequired
     }
     render(){

@@ -79,7 +79,7 @@ class MyPage extends Component{
             body:JSON.stringify({
                 oldName:sessionStorage.getItem('__username__'),
                 newName:this.usernameInput.value,
-                pic:document.querySelector('#tempPic').src,
+                pic:document.querySelector('#tempPic').src.match(/\/img\S*/)[0],
                 password:this.passwordInput.value
             }),
             mode:'cors'
