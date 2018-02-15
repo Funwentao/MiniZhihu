@@ -162,5 +162,25 @@ export default function (Router) {
             ctx.body = {status:1,all:all.reverse()};
         }
     );
+
+    router.get(
+        '/getMyLike',
+        async(ctx,next)=>{
+            const {username} = ctx.request.query;
+            const {like} = await UserModel.findOne({ username }).exec();
+            const jsonMap = [];
+            let temp = {};
+            for(let i = 0,l = like.length;i<l;i++){
+                temp.userId = like[i];
+                let user = await UserModel.findOne({_id:like[i]}).exec();
+                temp.userHead = user.headPic;
+                temp.username = user.username;
+                temp.bl = user.beLiked.length;
+                jsonMap.push(temp);
+            }
+
+            ctx.body = {status:1,like:jsonMap}
+        }
+    );
     return router.routes();
 }
