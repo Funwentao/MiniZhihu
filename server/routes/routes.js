@@ -50,5 +50,12 @@ export default function (Router) {
         await ctx.render('articles');
     });
 
+    /**
+     * 详情页
+     */
+    router.get('/articles/:aid',async(ctx,next) => {
+        await ctx.render('article_detail');
+    });
+
     return router.routes();
 }

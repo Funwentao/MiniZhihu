@@ -10,7 +10,8 @@ module.exports = {
         "collection":'./src/js/containers/CollectionContainer.js',
         "my":'./src/js/containers/MyContainer.js',
         'questions':'./src/js/containers/MyQuestions.js',
-        'articles':'./src/js/containers/MyArticles.js'
+        'articles':'./src/js/containers/MyArticles.js',
+        'articleDetail':'./src/js/containers/ArticleDetailContainer.js'
     },
     output: {
         path: __dirname+"/dist",
@@ -86,6 +87,12 @@ module.exports = {
             filename: '../view/articles.html',
             template: './template.html',
             chunks:['articles']
+        }),
+        new HtmlWebpackPlugin({
+            title: '详情',
+            filename: '../view/articles_detail.html',
+            template: './template.html',
+            chunks:['articleDetail']
         })
         //new ExtractTextPlugin('[name].css')
     ]
