@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import fetch from 'isomorphic-fetch';
 import ReactSVG from 'react-svg';
+import '../../less/article_detail.less';
 
 class ArticleDetail extends Component{
     constructor(){
@@ -12,8 +13,10 @@ class ArticleDetail extends Component{
             answerNum:123,
             type:'article',
             answer:[],
-        }
+            show:true
+        };
         this._loadData = this._loadData.bind(this);
+        this.showHandler = this.showHandler.bind(this);
     }
     _loadData(){
         const that = this;
@@ -39,6 +42,12 @@ class ArticleDetail extends Component{
             }
         })
     }
+    showHandler(){
+        this.text.focus();
+        this.setState({
+            show:!this.state.show
+        })
+    }
     componentDidMount(){
         this._loadData();
     }
@@ -46,17 +55,31 @@ class ArticleDetail extends Component{
         return(
             <div>
                 <div className="article-content">
-                    <h1>{this.state.title}</h1>
-                    <p>{this.state.content}</p>
-                    <div className="tips">
-                        <span>{this.state.answerNum} 人收藏</span>
-                        <span>{this.state.collect} 条{this.state.type==='article'?'评论':'回答'}</span>
-                        <a href="javascript:;">收藏问题</a>
+                    <div className="pd">
+                        <h1>{this.state.title}</h1>
+                        <p>{this.state.content}</p>
+                        <div className="tips">
+                            <span>{this.state.answerNum} 人收藏</span>
+                            <span>{this.state.collect} 条{this.state.type==='article'?'评论':'回答'}</span>
+                            <a href="javascript:;" id="collect-btn">收藏问题</a>
+                        </div>
                     </div>
-                    <a href="javascript:;"><ReactSVG
-                        path="../../svg/edit.svg"
-                        className="edit-svg"
-                    /> 添加{this.state.type==='article'?'评论':'回答'}</a>
+                    {
+                        this.state.show&&<a href="javascript:;" id="comment-btn" onClick={this.showHandler}><ReactSVG
+                            path="../../svg/edit.svg"
+                            className="edit-svg"
+                        /> 添加{this.state.type==='article'?'评论':'回答'}</a>
+                    }
+                    {
+                        !this.state.show&&<div>
+                            <div className="comment-content">
+                                <a href="javascript:;" className="btn" onClick={this.showHandler}>取消</a>
+                                <a href="javascript:;" className="btn right">发布</a>
+                            </div>
+                            <textarea id="comment-detail" ref={(text)=>this.text = text}/>
+                        </div>
+                    }
+
                 </div>
                 <div className="answer-content">
                     {

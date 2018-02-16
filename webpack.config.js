@@ -90,7 +90,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             title: '详情',
-            filename: '../view/articles_detail.html',
+            filename: '../view/article_detail.html',
             template: './template.html',
             chunks:['articleDetail']
         })

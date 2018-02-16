@@ -53,7 +53,7 @@ export default function (Router) {
     /**
      * 详情页
      */
-    router.get('/articles/:aid',async(ctx,next) => {
+    router.get('/article_detail',async(ctx,next) => {
         await ctx.render('article_detail');
     });
 
