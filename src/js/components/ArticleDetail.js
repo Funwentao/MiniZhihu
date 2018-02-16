@@ -33,6 +33,8 @@ class ArticleDetail extends Component{
         }).then(function(data){
             if(data.status === 1){
                 that.setState({
+                    like:false,
+                    collection:false,
                     title:data.title,
                     content:data.content,
                     collect:data.collect,
@@ -53,6 +55,10 @@ class ArticleDetail extends Component{
     render(){
         return(
             <div>
+                <div className="author-tips">
+                    <img src="../img/810438.jpg"/>
+                    <a href="javascript:;" className={this.state.like?'gary-btn':'blue-btn'}>关注</a>
+                </div>
                 <div className="article-content">
                     <div className="pd">
                         <h1>{this.state.title}</h1>
@@ -60,7 +66,7 @@ class ArticleDetail extends Component{
                         <div className="tips">
                             <span>{this.state.answerNum} 人收藏</span>
                             <span>{this.state.collect} 条{this.state.type==='article'?'评论':'回答'}</span>
-                            <a href="javascript:;" id="collect-btn">收藏问题</a>
+                            <a href="javascript:;" id="collect-btn" className={this.state.collection?'gary-btn':'blue-btn'}>收藏问题</a>
                         </div>
                     </div>
                     {
