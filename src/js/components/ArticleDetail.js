@@ -57,6 +57,7 @@ class ArticleDetail extends Component{
             <div>
                 <div className="author-tips">
                     <img src="../img/810438.jpg"/>
+                    <span>fun</span>
                     <a href="javascript:;" className={this.state.like?'gary-btn':'blue-btn'}>关注</a>
                 </div>
                 <div className="article-content">
