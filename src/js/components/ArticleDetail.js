@@ -43,7 +43,6 @@ class ArticleDetail extends Component{
         })
     }
     showHandler(){
-        this.text.focus();
         this.setState({
             show:!this.state.show
         })

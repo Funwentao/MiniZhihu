@@ -27215,7 +27215,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".article-list {\n  margin-bottom: 60px;\n}\n.article-list .article {\n  padding: 10px;\n  background: #fff;\n  margin-bottom: 10px;\n  box-shadow: black 0 0 30px;\n}\n.article-list .article .title {\n  font-size: 18px;\n  font-weight: bold;\n}\n.article-list .article .content {\n  font-size: 14px;\n  color: #4c4c4c;\n  line-height: 20px;\n  letter-spacing: 1px;\n}\n.article-list .article .tips {\n  color: #b9b9b9;\n  font-size: 12px;\n}\n.article-list .article .tips .type {\n  border: 1px solid #909090;\n  border-radius: 4px;\n  font-size: 8px;\n  padding: 2px;\n}\n.article-list .article .tips .ml {\n  margin-left: 10px;\n}\n", ""]);
+exports.push([module.i, ".article-list {\n  margin-bottom: 60px;\n}\n.article-list .article {\n  padding: 10px;\n  background: #fff;\n  margin-bottom: 10px;\n  border-bottom: 1px solid #dfdfdf;\n}\n.article-list .article .title {\n  font-size: 18px;\n  font-weight: bold;\n}\n.article-list .article .content {\n  font-size: 14px;\n  color: #4c4c4c;\n  line-height: 20px;\n  letter-spacing: 1px;\n}\n.article-list .article .tips {\n  color: #b9b9b9;\n  font-size: 12px;\n}\n.article-list .article .tips .type {\n  border: 1px solid #909090;\n  border-radius: 4px;\n  font-size: 8px;\n  padding: 2px;\n}\n.article-list .article .tips .ml {\n  margin-left: 10px;\n}\n", ""]);
 
 // exports
 
