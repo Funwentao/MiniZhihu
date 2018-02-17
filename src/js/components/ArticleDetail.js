@@ -12,7 +12,39 @@ class ArticleDetail extends Component{
             collect:123,
             answerNum:123,
             type:'article',
-            answer:[],
+            like:true,
+            collection:true,
+            answer:[{
+                headPic:'../img/810438.jpg',
+                username:'fun',
+                content:'就放假弗兰克斯的解放路圣诞节',
+                time:'2018/10/2 16:8'
+            },{
+                headPic:'../img/810438.jpg',
+                username:'fun',
+                content:'就放假弗兰克斯的解放路圣诞节',
+                time:'2018/10/2 16:8'
+            },{
+                headPic:'../img/810438.jpg',
+                username:'fun',
+                content:'就放假弗兰克斯的解放路圣诞节',
+                time:'2018/10/2 16:8'
+            },{
+                headPic:'../img/810438.jpg',
+                username:'fun',
+                content:'就放假弗兰克斯的解放路圣诞节',
+                time:'2018/10/2 16:8'
+            },{
+                headPic:'../img/810438.jpg',
+                username:'fun',
+                content:'就放假弗兰克斯的解放路圣诞节',
+                time:'2018/10/2 16:8'
+            },{
+                headPic:'../img/810438.jpg',
+                username:'fun',
+                content:'就放假弗兰克斯的解放路圣诞节',
+                time:'2018/10/2 16:8'
+            }],
             show:true
         };
         this._loadData = this._loadData.bind(this);
@@ -55,37 +87,39 @@ class ArticleDetail extends Component{
     render(){
         return(
             <div>
-                <div className="author-tips">
-                    <img src="../img/810438.jpg"/>
-                    <span>fun</span>
-                    <a href="javascript:;" className={this.state.like?'gary-btn':'blue-btn'}>关注</a>
-                </div>
-                <div className="article-content">
-                    <div className="pd">
-                        <h1>{this.state.title}</h1>
-                        <p>{this.state.content}</p>
-                        <div className="tips">
-                            <span>{this.state.answerNum} 人收藏</span>
-                            <span>{this.state.collect} 条{this.state.type==='article'?'评论':'回答'}</span>
-                            <a href="javascript:;" id="collect-btn" className={this.state.collection?'gary-btn':'blue-btn'}>收藏问题</a>
-                        </div>
+                <div className="fixed-content">
+                    <div className="author-tips">
+                        <img src="../img/810438.jpg"/>
+                        <span>fun</span>
+                        <a href="javascript:;" className={this.state.like?'gray-btn':'blue-btn'}>{this.state.like?'取消关注':'关注'}</a>
                     </div>
-                    {
-                        this.state.show&&<a href="javascript:;" id="comment-btn" onClick={this.showHandler}><ReactSVG
-                            path="../../svg/edit.svg"
-                            className="edit-svg"
-                        /> 添加{this.state.type==='article'?'评论':'回答'}</a>
-                    }
-                    {
-                        !this.state.show&&<div>
-                            <div className="comment-content">
-                                <a href="javascript:;" className="btn" onClick={this.showHandler}>取消</a>
-                                <a href="javascript:;" className="btn right">发布</a>
+                    <div className="article-content">
+                        <div className="pd">
+                            <h1>{this.state.title}</h1>
+                            <p>{this.state.content}</p>
+                            <div className="tips">
+                                <span>{this.state.answerNum} 人收藏</span>
+                                <span>{this.state.collect} 条{this.state.type==='article'?'评论':'回答'}</span>
+                                <a href="javascript:;" id="collect-btn" className={this.state.collection?'gray-btn':'blue-btn'}>{this.state.collection?'取消收藏':'收藏'}</a>
                             </div>
-                            <textarea id="comment-detail" ref={(text)=>this.text = text}/>
                         </div>
-                    }
+                        {
+                            this.state.show&&<a href="javascript:;" id="comment-btn" onClick={this.showHandler}><ReactSVG
+                                path="../../svg/edit.svg"
+                                className="edit-svg"
+                            /> 添加{this.state.type==='article'?'评论':'回答'}</a>
+                        }
+                        {
+                            !this.state.show&&<div>
+                                <div className="comment-content">
+                                    <a href="javascript:;" className="btn" onClick={this.showHandler}>取消</a>
+                                    <a href="javascript:;" className="btn right">发布</a>
+                                </div>
+                                <textarea id="comment-detail" ref={(text)=>this.text = text}/>
+                            </div>
+                        }
 
+                    </div>
                 </div>
                 <div className="answer-content">
                     {
@@ -95,6 +129,7 @@ class ArticleDetail extends Component{
                                     <div className="answer-tips">
                                         <img src={e.headPic}/>
                                         <span>{e.username}</span>
+                                        <span>{e.time}</span>
                                     </div>
                                     <p className="answer-content">{e.content}</p>
                                 </div>

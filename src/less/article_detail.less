@@ -1,9 +1,15 @@
 body{
   background-color: #f5f5f9;
   margin: 0;
+  .fixed-content{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+  }
   .gray-btn{
     font-size: 12px;
-    color: black;
+    color: #8e8e8e;
     text-decoration: none;
     padding: 5px 15px;
     background: #ccc;
@@ -24,6 +30,7 @@ body{
     border-bottom: 1px solid #dfdfdf;
     background: white;
     vertical-align: middle;
+    color:#3e3e3e;
     img{
       width: 35px;
       height: 35px;
@@ -42,6 +49,7 @@ body{
   .article-content{
     border-top: 1px solid #dfdfdf;
     background: white;
+    color:#3e3e3e;
     .pd{
       overflow: hidden;
       padding: 10px;
@@ -50,6 +58,7 @@ body{
       }
       span{
         font-size: 12px;
+        color:#3e3e3e;
         &:first-child{
           margin-right:15px;
         }
@@ -59,7 +68,7 @@ body{
       }
     }
     #comment-btn{
-      color: black;
+      color: #3e3e3e;
       display: block;
       text-decoration: none;
       text-align: center;
@@ -75,7 +84,7 @@ body{
           width:14px;
           height: 14px;
           g{
-            fill:black;
+            fill:#3e3e3e;
           }
         }
       }
@@ -104,6 +113,32 @@ body{
       height: 100px;
       font-size: 14px;
       border-bottom: 1px solid #dfdfdf;
+    }
+  }
+  .answer-content{
+    margin-top: 270px;
+    margin-bottom: 50px;
+    .answer-item{
+      padding: 10px;
+      background: white;
+      border-top: 1px solid #dfdfdf;
+      border-bottom: 1px solid #dfdfdf;
+      margin-bottom: 10px;
+      color:#3e3e3e;
+      .answer-tips{
+        img{
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+        span{
+          margin-left: 5px;
+          font-size: 12px;
+        }
+      }
+      .answer-content{
+        margin: 0;
+      }
     }
   }
 }
