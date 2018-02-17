@@ -27112,6 +27112,7 @@ var ArticleList = function (_Component) {
     _createClass(ArticleList, [{
         key: 'render',
         value: function render() {
+            var username = sessionStorage.getItem('__username__');
             return _react2.default.createElement(
                 'div',
                 { className: 'article-list' },
@@ -27119,7 +27120,7 @@ var ArticleList = function (_Component) {
                     return _react2.default.createElement(
                         'article',
                         { key: i, className: 'article', onClick: function onClick() {
-                                return location.href = '/article_detail/' + e._id;
+                                return location.href = '/article_detail/' + e._id + '?username=' + username + '&type=' + e.type;
                             } },
                         _react2.default.createElement(
                             'h1',

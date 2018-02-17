@@ -29,7 +29,12 @@ const QuestionSchema = new Schema({
     create_time: {
         type: Date,
         default: new Date()
+    },
+    be_collect:{
+        type:Number,
+        default:0,
+        required:true
     }
-})
+});
 
 export default mongoose.model('Question', QuestionSchema)

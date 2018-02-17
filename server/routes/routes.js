@@ -1,3 +1,6 @@
+import UserModel from '../db/schema/user';
+import QuestionModel from '../db/schema/question';
+import ArticleModel from '../db/schema/article';
 export default function (Router) {
     const router = new Router();
 
@@ -50,7 +53,12 @@ export default function (Router) {
         await ctx.render('articles');
     });
 
-
+    /**
+     * 详情页
+     */
+    router.get('/article_detail/:aid',async(ctx,next) => {
+        await ctx.render('article_detail');
+    });
 
     return router.routes();
 }

@@ -5,14 +5,15 @@ import '../../less/article.less';
 class ArticleList extends Component{
     static propTypes = {
         articles: PropTypes.array.isRequired
-    }
+    };
     render(){
+        const username = sessionStorage.getItem('__username__');
         return(
             <div className="article-list">
                 {
                    this.props.articles.map((e,i)=>{
                        return(
-                           <article key={i} className="article" onClick={()=>location.href='/article_detail/'+ e._id}>
+                           <article key={i} className="article" onClick={()=>location.href='/article_detail/'+ e._id + '?username='+username +'&type=' + e.type}>
                                <h1 className="title">{e.title}</h1>
                                <p className="content">{e.content}</p>
                                <div className="tips">
@@ -27,7 +28,6 @@ class ArticleList extends Component{
                    })
                 }
             </div>
-
         )
     }
 }

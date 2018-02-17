@@ -41,6 +41,7 @@ export default function (Router) {
                     })
                     user.token = token;
                     await user.save();
+                    ctx.session.username = username;
                     ctx.body = { status: 1, msg: '登陆验证成功', token, username }
                 }
             }
@@ -183,15 +184,29 @@ export default function (Router) {
         }
     );
 
-
-    /**
-     * 详情页
-     */
     router.get('/article_detail/:aid',async(ctx,next) => {
-        console.log(ctx.params.aid);
-        await ctx.render('article_detail');
+        const _id = ctx.params.aid;
+        const {username,type} = ctx.request.query;
+        const user = await UserModel.findOne({username}).exec();
+        let article ;
+        if(type==='article'){
+            article = await ArticleModel.findOne({_id}).exec()
+        }else{
+            article = await QuestionModel.findOne({_id}).exec()
+        }
+        const author = article.author;
+        const writer_user = await UserModel.findOne({username:author}).exec();
+        const like = (user.like.indexOf(username)!==-1);
+        const collect = (user.collections.indexOf(_id)!==-1);
+        ctx.body = {
+            status:1,
+            headPic:writer_user.headPic,
+            username:writer_user.username,
+            article,
+            like,
+            collect
+        };
     });
-
 
     return router.routes();
 }

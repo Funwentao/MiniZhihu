@@ -7,10 +7,10 @@ class ArticleDetail extends Component{
     constructor(){
         super();
         this.state = {
+            headPic:'',
             title:'一个人智商高有多可怕',
             content:'静安寺放假了肯德基傅雷家书打疯了',
             collect:123,
-            answerNum:123,
             type:'article',
             like:true,
             collection:true,
@@ -52,7 +52,7 @@ class ArticleDetail extends Component{
     }
     _loadData(){
         const that = this;
-        const url = '/api/getArticleDetail' + '?aid=' ;
+        const url = '/api' + location.href.match(/\/article_detail\S*/)[0] ;
         fetch(url,{
             method: 'GET',
             // 设置这个header，才能正确parse
@@ -65,13 +65,15 @@ class ArticleDetail extends Component{
         }).then(function(data){
             if(data.status === 1){
                 that.setState({
-                    like:false,
-                    collection:false,
-                    title:data.title,
-                    content:data.content,
+                    like:data.like,
+                    collection:data.article.be_collect?data.article.be_collect:0,
+                    title:data.article.title,
+                    content:data.article.content,
                     collect:data.collect,
-                    answerNum:data.answerNum,
-                    answer:data.answer
+                    answer:data.article.comments||data.article.answer,
+                    headPic:data.headPic,
+                    type:data.article.type,
+                    username:data.username
                 })
             }
         })
@@ -93,8 +95,8 @@ class ArticleDetail extends Component{
                             path="../../svg/arrow.svg"
                             className="arrow-svg"
                         /></a>
-                        <img src="../img/810438.jpg"/>
-                        <span>fun</span>
+                        <img src={this.state.headPic}/>
+                        <span>{this.state.username}</span>
                         <a href="javascript:;" className={this.state.like?'gray-btn':'blue-btn'}>{this.state.like?'取消关注':'关注'}</a>
                     </div>
                     <div className="article-content">
@@ -102,8 +104,8 @@ class ArticleDetail extends Component{
                             <h1>{this.state.title}</h1>
                             <p>{this.state.content}</p>
                             <div className="tips">
-                                <span>{this.state.answerNum} 人收藏</span>
-                                <span>{this.state.collect} 条{this.state.type==='article'?'评论':'回答'}</span>
+                                <span>{this.state.collect} 人收藏</span>
+                                <span>{this.state.answer.length} 条{this.state.type==='article'?'评论':'回答'}</span>
                                 <a href="javascript:;" id="collect-btn" className={this.state.collection?'gray-btn':'blue-btn'}>{this.state.collection?'取消收藏':'收藏'}</a>
                             </div>
                         </div>
@@ -139,6 +141,11 @@ class ArticleDetail extends Component{
                                 </div>
                             )
                         })
+                    }
+                    {
+                        !this.state.answer.length&&<div className="no-comment">
+                            {this.props.answer?'暂无回答...':'暂无评论...'}
+                        </div>
                     }
                 </div>
             </div>
