@@ -23545,7 +23545,9 @@ var ArticleList = function (_Component) {
                 this.props.articles.map(function (e, i) {
                     return _react2.default.createElement(
                         'article',
-                        { key: i, className: 'article' },
+                        { key: i, className: 'article', onClick: function onClick() {
+                                return location.href = '/article_detail/' + e._id;
+                            } },
                         _react2.default.createElement(
                             'h1',
                             { className: 'title' },

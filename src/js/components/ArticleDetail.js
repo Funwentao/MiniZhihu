@@ -89,6 +89,10 @@ class ArticleDetail extends Component{
             <div>
                 <div className="fixed-content">
                     <div className="author-tips">
+                        <a href="javascript:;" id="back-btn" onClick={()=>window.history.back()}><ReactSVG
+                            path="../../svg/arrow.svg"
+                            className="arrow-svg"
+                        /></a>
                         <img src="../img/810438.jpg"/>
                         <span>fun</span>
                         <a href="javascript:;" className={this.state.like?'gray-btn':'blue-btn'}>{this.state.like?'取消关注':'关注'}</a>
@@ -123,9 +127,9 @@ class ArticleDetail extends Component{
                 </div>
                 <div className="answer-content">
                     {
-                        this.state.answer.map(function (e) {
+                        this.state.answer.map(function (e,i) {
                             return(
-                                <div className="answer-item">
+                                <div className="answer-item" key={i}>
                                     <div className="answer-tips">
                                         <img src={e.headPic}/>
                                         <span>{e.username}</span>

@@ -12,7 +12,7 @@ class ArticleList extends Component{
                 {
                    this.props.articles.map((e,i)=>{
                        return(
-                           <article key={i} className="article">
+                           <article key={i} className="article" onClick={()=>location.href='/article_detail/'+ e._id}>
                                <h1 className="title">{e.title}</h1>
                                <p className="content">{e.content}</p>
                                <div className="tips">

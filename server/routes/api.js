@@ -182,5 +182,16 @@ export default function (Router) {
             ctx.body = {status:1,like:jsonMap}
         }
     );
+
+
+    /**
+     * 详情页
+     */
+    router.get('/article_detail/:aid',async(ctx,next) => {
+        console.log(ctx.params.aid);
+        await ctx.render('article_detail');
+    });
+
+
     return router.routes();
 }
