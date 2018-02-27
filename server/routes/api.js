@@ -42,7 +42,6 @@ export default function (Router) {
                     user.token = token;
                     await user.save();
                     ctx.session.username = username;
-                    console.log(ctx.session)
                     ctx.body = { status: 1, msg: '登陆验证成功', token, username }
                 }
             }
@@ -191,9 +190,11 @@ export default function (Router) {
         const user = await UserModel.findOne({username}).exec();
         let article ;
         if(type==='article'){
-            article = await ArticleModel.findOne({_id}).exec()
+            article = await ArticleModel.findOne({_id}).exec();
+            article.comments = article.comments.reverse();
         }else{
-            article = await QuestionModel.findOne({_id}).exec()
+            article = await QuestionModel.findOne({_id}).exec();
+            article.answer = article.answer.reverse();
         }
         const author = article.author;
         const writer_user = await UserModel.findOne({username:author}).exec();
@@ -210,11 +211,60 @@ export default function (Router) {
     });
 
     router.post('/publish_comment',async(ctx,next)=>{
-        ctx.body = {
-            username:ctx.session.username
-        }
+       const {_id,username,comment,type} = ctx.request.query;
+       let commentItem = {};
+       const user = await UserModel.findOne({username}).exec();
+       commentItem.headPic = user.headPic;
+       commentItem.username = username;
+       commentItem.time = new Date().toLocaleString();
+       commentItem.content = comment;
+       if(type==='question'){
+           await QuestionModel.update({_id},{$push:{answer:commentItem}});
+       }else{
+           await ArticleModel.update({_id},{$push:{comments:commentItem}});
+       }
+       await UserModel.update({username},{$push:{answer:{type,_id}}});
+       ctx.body = {
+           status:1,
+           msg:'保存成功'
+       }
     });
 
 
+    router.get('/like',async(ctx,next)=>{
+        const {writer,username} = ctx.request.query;
+        let user= await UserModel.findOne({username}).exec();
+        let like = user.like;
+        if(like.indexOf(writer)===-1){
+            like.push(writer)
+        }else{
+            let i = like.indexOf(writer);
+            like.splice(i,1);
+        }
+        user.like = like;
+        user.save();
+        ctx.body = {
+            status:1,
+            msg:'操作成功'
+        }
+    });
+
+    router.get('/collect',async(ctx,next)=>{
+        const {_id,username} = ctx.request.query;
+        let user = await UserModel.findOne({username}).exec();
+        let collections = user.collections;
+        if(collections.indexOf(_id)===-1){
+            collections.push(_id)
+        }else{
+            let i = collections.indexOf(_id);
+            collections.splice(i,1);
+        }
+        user.collections = collections;
+        user.save();
+        ctx.body = {
+            status:1,
+            msg:'操作成功'
+        }
+    });
     return router.routes();
 }

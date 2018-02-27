@@ -687,6 +687,10 @@ var _reactSvg2 = _interopRequireDefault(_reactSvg);
 
 __webpack_require__(239);
 
+var _Layer = __webpack_require__(92);
+
+var _Layer2 = _interopRequireDefault(_Layer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -705,48 +709,24 @@ var ArticleDetail = function (_Component) {
 
         _this.state = {
             headPic: '',
-            title: '一个人智商高有多可怕',
-            content: '静安寺放假了肯德基傅雷家书打疯了',
+            title: '',
+            content: '',
             be_collected: 123,
             type: 'article',
             like: true,
             collection: true,
-            answer: [{
-                headPic: '../img/810438.jpg',
-                username: 'fun',
-                content: '就放假弗兰克斯的解放路圣诞节',
-                time: '2018/10/2 16:8'
-            }, {
-                headPic: '../img/810438.jpg',
-                username: 'fun',
-                content: '就放假弗兰克斯的解放路圣诞节',
-                time: '2018/10/2 16:8'
-            }, {
-                headPic: '../img/810438.jpg',
-                username: 'fun',
-                content: '就放假弗兰克斯的解放路圣诞节',
-                time: '2018/10/2 16:8'
-            }, {
-                headPic: '../img/810438.jpg',
-                username: 'fun',
-                content: '就放假弗兰克斯的解放路圣诞节',
-                time: '2018/10/2 16:8'
-            }, {
-                headPic: '../img/810438.jpg',
-                username: 'fun',
-                content: '就放假弗兰克斯的解放路圣诞节',
-                time: '2018/10/2 16:8'
-            }, {
-                headPic: '../img/810438.jpg',
-                username: 'fun',
-                content: '就放假弗兰克斯的解放路圣诞节',
-                time: '2018/10/2 16:8'
-            }],
-            show: true
+            answer: [],
+            show: true,
+            information: '',
+            layer: false,
+            username: ''
         };
         _this._loadData = _this._loadData.bind(_this);
         _this.showHandler = _this.showHandler.bind(_this);
         _this.publish = _this.publish.bind(_this);
+        _this.closeHandler = _this.closeHandler.bind(_this);
+        _this.likeHandler = _this.likeHandler.bind(_this);
+        _this.collectHandler = _this.collectHandler.bind(_this);
         return _this;
     }
 
@@ -754,7 +734,8 @@ var ArticleDetail = function (_Component) {
         key: '_loadData',
         value: function _loadData() {
             var that = this;
-            var url = '/api' + location.href.match(/\/article_detail\S*/)[0];
+            var username = sessionStorage.getItem('__username__');
+            var url = '/api' + location.href.match(/\/article_detail\S*/)[0] + '&username=' + username;
             (0, _isomorphicFetch2.default)(url, {
                 method: 'GET',
                 // 设置这个header，才能正确parse
@@ -772,7 +753,7 @@ var ArticleDetail = function (_Component) {
                         title: data.article.title,
                         content: data.article.content,
                         collection: data.collect,
-                        answer: data.article.comments || data.article.answer,
+                        answer: data.article.comments ? data.article.comments : data.article.answer,
                         headPic: data.headPic,
                         type: data.article.type,
                         username: data.username
@@ -793,10 +774,28 @@ var ArticleDetail = function (_Component) {
             this._loadData();
         }
     }, {
+        key: 'closeHandler',
+        value: function closeHandler() {
+            this.setState({
+                layer: !this.state.layer
+            });
+        }
+    }, {
         key: 'publish',
         value: function publish() {
+            var that = this;
             var comment = this.text.value;
-            var url = '/api/publish_comment';
+            var _id = location.href.match(/\/article_detail\S*\?/)[0].split('/')[2].slice(0, -1);
+            var username = sessionStorage.getItem('__username__');
+            var type = location.href.match(/type\S*/)[0].split('=')[1];
+            var url = '/api/publish_comment' + '?_id=' + _id + '&username=' + username + '&comment=' + comment + '&type=' + type;
+            if (!comment.trim()) {
+                this.setState({
+                    layer: true,
+                    information: '评论内容不能为空'
+                });
+                return;
+            }
             (0, _isomorphicFetch2.default)(url, {
                 method: 'POST',
                 // 设置这个header，才能正确parse
@@ -804,6 +803,68 @@ var ArticleDetail = function (_Component) {
                     'Content-Type': 'application/json'
                 },
                 mode: 'cors'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                if (data.status === 1) {
+                    that.setState({
+                        show: true,
+                        information: data.msg,
+                        layer: true
+                    });
+                    that._loadData();
+                }
+            });
+        }
+    }, {
+        key: 'collectHandler',
+        value: function collectHandler() {
+            var that = this;
+            var _id = location.href.match(/\/article_detail\S*\?/)[0].split('/')[2].slice(0, -1);
+            var username = sessionStorage.getItem('__username__');
+            var url = '/api/collect' + '?_id=' + _id + '&username=' + username;
+            (0, _isomorphicFetch2.default)(url, {
+                method: 'GET',
+                // 设置这个header，才能正确parse
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                that.setState({
+                    show: true,
+                    information: data.msg,
+                    layer: true
+                });
+                that._loadData();
+            });
+        }
+    }, {
+        key: 'likeHandler',
+        value: function likeHandler() {
+            var that = this;
+            var username = sessionStorage.getItem('__username__');
+            var writer = this.state.username;
+            var url = '/api/like' + '?username=' + username + '&writer=' + writer;
+            (0, _isomorphicFetch2.default)(url, {
+                method: 'GET',
+                // 设置这个header，才能正确parse
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                if (data.status === 1) {
+                    that._loadData();
+                    that.setState({
+                        layer: true,
+                        information: data.msg
+                    });
+                }
             });
         }
     }, {
@@ -838,7 +899,7 @@ var ArticleDetail = function (_Component) {
                         ),
                         _react2.default.createElement(
                             'a',
-                            { href: 'javascript:;', className: this.state.like ? 'gray-btn' : 'blue-btn' },
+                            { href: 'javascript:;', className: this.state.like ? 'gray-btn' : 'blue-btn', onClick: this.likeHandler },
                             this.state.like ? '取消关注' : '关注'
                         )
                     ),
@@ -876,7 +937,11 @@ var ArticleDetail = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'a',
-                                    { href: 'javascript:;', id: 'collect-btn', className: this.state.collection ? 'gray-btn' : 'blue-btn' },
+                                    { href: 'javascript:;',
+                                        id: 'collect-btn',
+                                        className: this.state.collection ? 'gray-btn' : 'blue-btn',
+                                        onClick: this.collectHandler
+                                    },
                                     this.state.collection ? '取消收藏' : '收藏'
                                 )
                             )
@@ -948,6 +1013,12 @@ var ArticleDetail = function (_Component) {
                         { className: 'no-comment' },
                         this.props.answer ? '暂无回答...' : '暂无评论...'
                     )
+                ),
+                this.state.layer && _react2.default.createElement(
+                    _Layer2.default,
+                    { closeHandler: this.closeHandler },
+                    _react2.default.createElement('div', { className: 'test',
+                        dangerouslySetInnerHTML: { __html: this.state.information } })
                 )
             );
         }
@@ -1000,7 +1071,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "body {\n  background-color: #f5f5f9;\n  margin: 0;\n}\nbody .fixed-content {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n}\nbody .gray-btn {\n  font-size: 12px;\n  color: #8e8e8e;\n  text-decoration: none;\n  padding: 5px 15px;\n  background: #ccc;\n  border-radius: 3px;\n}\nbody .blue-btn {\n  font-size: 12px;\n  color: white;\n  text-decoration: none;\n  padding: 5px 15px;\n  background: #2589df;\n  border-radius: 3px;\n}\nbody .author-tips {\n  text-align: center;\n  padding: 10px;\n  margin-bottom: 5px;\n  border-bottom: 1px solid #dfdfdf;\n  background: white;\n  vertical-align: middle;\n  color: #3e3e3e;\n}\nbody .author-tips #back-btn {\n  color: #2589df;\n  text-decoration: none;\n  float: left;\n  margin-left: 5px;\n  position: relative;\n  top: 8px;\n}\nbody .author-tips #back-btn div {\n  display: inline;\n  top: 1px;\n  position: relative;\n}\nbody .author-tips #back-btn div .arrow-svg {\n  width: 18px;\n  height: 18px;\n}\nbody .author-tips img {\n  width: 35px;\n  height: 35px;\n  border-radius: 50%;\n  margin-right: 5px;\n}\nbody .author-tips span {\n  font-size: 14px;\n  margin-right: 10px;\n}\nbody .author-tips a {\n  position: relative;\n  bottom: 10px;\n}\nbody .article-content {\n  border-top: 1px solid #dfdfdf;\n  background: white;\n  color: #3e3e3e;\n}\nbody .article-content .pd {\n  overflow: hidden;\n  padding: 10px;\n}\nbody .article-content .pd h1 {\n  font-size: 20px;\n}\nbody .article-content .pd span {\n  font-size: 12px;\n  color: #3e3e3e;\n}\nbody .article-content .pd span:first-child {\n  margin-right: 15px;\n}\nbody .article-content .pd #collect-btn {\n  float: right;\n}\nbody .article-content #comment-btn {\n  color: #3e3e3e;\n  display: block;\n  text-decoration: none;\n  text-align: center;\n  padding: 12px 0;\n  font-size: 14px;\n  border-top: 1px solid #dfdfdf;\n  border-bottom: 1px solid #dfdfdf;\n}\nbody .article-content #comment-btn div {\n  display: inline;\n  position: relative;\n  top: 1px;\n}\nbody .article-content #comment-btn div svg {\n  width: 14px;\n  height: 14px;\n}\nbody .article-content #comment-btn div svg g {\n  fill: #3e3e3e;\n}\nbody .article-content .comment-content {\n  border-top: 1px solid #dfdfdf ;\n  border-bottom: 1px solid #dfdfdf;\n}\nbody .article-content .comment-content .btn {\n  font-size: 14px;\n  display: inline-block;\n  width: 50%;\n  box-sizing: border-box;\n  padding: 12px 0;\n  text-align: center;\n  color: black;\n  text-decoration: none;\n}\nbody .article-content .comment-content .right {\n  border-left: 1px solid #dfdfdf;\n}\nbody .article-content #comment-detail {\n  width: 100%;\n  padding: 5px;\n  border: none;\n  height: 100px;\n  font-size: 14px;\n  border-bottom: 1px solid #dfdfdf;\n}\nbody .answer-content {\n  margin-top: 270px;\n  margin-bottom: 50px;\n}\nbody .answer-content .answer-item {\n  padding: 10px;\n  background: white;\n  border-top: 1px solid #dfdfdf;\n  border-bottom: 1px solid #dfdfdf;\n  margin-bottom: 10px;\n  color: #3e3e3e;\n}\nbody .answer-content .answer-item .answer-tips img {\n  width: 30px;\n  height: 30px;\n  border-radius: 50%;\n}\nbody .answer-content .answer-item .answer-tips span {\n  margin-left: 5px;\n  font-size: 12px;\n}\nbody .answer-content .answer-item .answer-content {\n  margin: 0;\n}\nbody .no-comment {\n  text-align: center;\n  color: #bfbfbf;\n}\n", ""]);
+exports.push([module.i, "body {\n  background-color: #f5f5f9;\n  margin: 0;\n}\nbody .gray-btn {\n  font-size: 12px;\n  color: #8e8e8e;\n  text-decoration: none;\n  padding: 5px 15px;\n  background: #ccc;\n  border-radius: 3px;\n}\nbody .blue-btn {\n  font-size: 12px;\n  color: white;\n  text-decoration: none;\n  padding: 5px 15px;\n  background: #2589df;\n  border-radius: 3px;\n}\nbody .author-tips {\n  text-align: center;\n  padding: 10px;\n  margin-bottom: 5px;\n  border-bottom: 1px solid #dfdfdf;\n  background: white;\n  vertical-align: middle;\n  color: #3e3e3e;\n}\nbody .author-tips #back-btn {\n  color: #2589df;\n  text-decoration: none;\n  float: left;\n  margin-left: 5px;\n  position: relative;\n  top: 8px;\n}\nbody .author-tips #back-btn div {\n  display: inline;\n  top: 1px;\n  position: relative;\n}\nbody .author-tips #back-btn div .arrow-svg {\n  width: 18px;\n  height: 18px;\n}\nbody .author-tips img {\n  width: 35px;\n  height: 35px;\n  border-radius: 50%;\n  margin-right: 5px;\n}\nbody .author-tips span {\n  font-size: 14px;\n  margin-right: 10px;\n}\nbody .author-tips a {\n  position: relative;\n  bottom: 10px;\n}\nbody .article-content {\n  border-top: 1px solid #dfdfdf;\n  background: white;\n  color: #3e3e3e;\n}\nbody .article-content .pd {\n  overflow: hidden;\n  padding: 10px;\n}\nbody .article-content .pd h1 {\n  font-size: 20px;\n}\nbody .article-content .pd span {\n  font-size: 12px;\n  color: #3e3e3e;\n}\nbody .article-content .pd span:first-child {\n  margin-right: 15px;\n}\nbody .article-content .pd #collect-btn {\n  float: right;\n}\nbody .article-content #comment-btn {\n  color: #3e3e3e;\n  display: block;\n  text-decoration: none;\n  text-align: center;\n  padding: 12px 0;\n  font-size: 14px;\n  border-top: 1px solid #dfdfdf;\n  border-bottom: 1px solid #dfdfdf;\n}\nbody .article-content #comment-btn div {\n  display: inline;\n  position: relative;\n  top: 1px;\n}\nbody .article-content #comment-btn div svg {\n  width: 14px;\n  height: 14px;\n}\nbody .article-content #comment-btn div svg g {\n  fill: #3e3e3e;\n}\nbody .article-content .comment-content {\n  border-top: 1px solid #dfdfdf ;\n  border-bottom: 1px solid #dfdfdf;\n}\nbody .article-content .comment-content .btn {\n  font-size: 14px;\n  display: inline-block;\n  width: 50%;\n  box-sizing: border-box;\n  padding: 12px 0;\n  text-align: center;\n  color: black;\n  text-decoration: none;\n}\nbody .article-content .comment-content .right {\n  border-left: 1px solid #dfdfdf;\n}\nbody .article-content #comment-detail {\n  width: 100%;\n  padding: 5px;\n  border: none;\n  height: 100px;\n  font-size: 14px;\n  border-bottom: 1px solid #dfdfdf;\n}\nbody .answer-content {\n  margin-top: 10px;\n  margin-bottom: 10px;\n}\nbody .answer-content .answer-item {\n  padding: 10px;\n  background: white;\n  border-top: 1px solid #dfdfdf;\n  border-bottom: 1px solid #dfdfdf;\n  margin-bottom: 10px;\n  color: #3e3e3e;\n}\nbody .answer-content .answer-item .answer-tips img {\n  width: 30px;\n  height: 30px;\n  border-radius: 50%;\n}\nbody .answer-content .answer-item .answer-tips span {\n  margin-left: 5px;\n  font-size: 12px;\n}\nbody .answer-content .answer-item .answer-content {\n  margin: 0;\n}\nbody .no-comment {\n  text-align: center;\n  color: #bfbfbf;\n}\n", ""]);
 
 // exports
 
@@ -1027,7 +1098,7 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ 28:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19890,7 +19961,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _propTypes = __webpack_require__(28);
+var _propTypes = __webpack_require__(27);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -19898,7 +19969,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _server = __webpack_require__(92);
+var _server = __webpack_require__(95);
 
 var _server2 = _interopRequireDefault(_server);
 
@@ -19912,7 +19983,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // See: https://github.com/webpack/react-starter/issues/37
 var isBrowser = typeof window !== 'undefined';
-var SVGInjector = isBrowser ? __webpack_require__(95) : undefined;
+var SVGInjector = isBrowser ? __webpack_require__(98) : undefined;
 
 var ReactSVG = function (_React$Component) {
   _inherits(ReactSVG, _React$Component);
@@ -20497,19 +20568,135 @@ module.exports = self.fetch.bind(self);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(93);
+
+var _propTypes = __webpack_require__(27);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Layer = function (_Component) {
+    _inherits(Layer, _Component);
+
+    function Layer() {
+        _classCallCheck(this, Layer);
+
+        return _possibleConstructorReturn(this, (Layer.__proto__ || Object.getPrototypeOf(Layer)).apply(this, arguments));
+    }
+
+    _createClass(Layer, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'layer' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'children' },
+                    _react2.default.createElement(
+                        'a',
+                        { href: 'javascript:;', className: 'close', onClick: this.props.closeHandler },
+                        '\xD7'
+                    ),
+                    this.props.children
+                )
+            );
+        }
+    }]);
+
+    return Layer;
+}(_react.Component);
+
+Layer.propTypes = {
+    closeHandler: _propTypes2.default.func.isRequired
+};
+exports.default = Layer;
+
+/***/ }),
+
+/***/ 93:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(94);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(4)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./layer.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./layer.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 94:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".layer {\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  left: 0;\n  background: rgba(49, 49, 49, 0.4);\n  z-index: 99999999;\n}\n.layer .children {\n  text-align: center;\n  background: #fff;\n  box-shadow: black 0 0 20px;\n  width: 90%;\n  margin: 0 auto;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 30px 10px;\n  box-sizing: border-box;\n  border-radius: 5px;\n}\n.layer .children .close {\n  text-decoration: none;\n  position: absolute;\n  right: 10px;\n  top: 0px;\n  font-size: 24px;\n  color: black;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 95:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(93);
+  module.exports = __webpack_require__(96);
 } else {
-  module.exports = __webpack_require__(94);
+  module.exports = __webpack_require__(97);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 
-/***/ 93:
+/***/ 96:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20559,7 +20746,7 @@ d){if(null!=d.__html){d=d.__html;break a}}else if(d=f.children,"string"===typeof
 
 /***/ }),
 
-/***/ 94:
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23112,7 +23299,7 @@ module.exports = server_browser;
 
 /***/ }),
 
-/***/ 95:
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/**
