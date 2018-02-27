@@ -27343,14 +27343,7 @@ var CollectionPage = function (_Component) {
         var _this = _possibleConstructorReturn(this, (CollectionPage.__proto__ || Object.getPrototypeOf(CollectionPage)).call(this));
 
         _this.state = {
-            articles: [{
-                title: "这个优秀的演员终于红了",
-                content: "这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了",
-                type: "文章",
-                time: "2018-1-26 1:31",
-                agreement: 4682,
-                comments: 465
-            }]
+            articles: []
         };
         _this._loadData = _this._loadData.bind(_this);
         return _this;

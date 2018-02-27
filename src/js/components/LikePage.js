@@ -10,7 +10,7 @@ class LikePage extends Component{
         super();
         this.state = {
             likes:[]
-        }
+        };
         this._loadData = this._loadData.bind(this);
     }
     _loadData(){
@@ -28,9 +28,10 @@ class LikePage extends Component{
         }).then(function (response) {
             return response.json();
         }).then(function(data){
+            console.log(data);
             if(data.status === 1){
                 that.setState({
-                    like:data.like
+                    likes:data.like
                 })
             }
         })
@@ -47,7 +48,7 @@ class LikePage extends Component{
                         return (
                             <div className="person" key={i}>
                                 <div className="head-pic">
-                                    <img src={e.pic}/>
+                                    <img src={e.headPic}/>
                                     <span>{e.username}</span>
                                 </div>
                                 <div className="tip-item">

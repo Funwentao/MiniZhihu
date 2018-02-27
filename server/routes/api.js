@@ -172,11 +172,10 @@ export default function (Router) {
             const jsonMap = [];
             let temp = {};
             for(let i = 0,l = like.length;i<l;i++){
-                temp.userId = like[i];
-                let user = await UserModel.findOne({_id:like[i]}).exec();
-                temp.userHead = user.headPic;
+                let user = await UserModel.findOne({username:like[i]}).exec();
+                temp.headPic = user.headPic;
                 temp.username = user.username;
-                temp.bl = user.beLiked.length;
+                temp.beLiked = user.beLiked.length;
                 jsonMap.push(temp);
             }
 

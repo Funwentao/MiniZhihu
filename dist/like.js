@@ -27691,9 +27691,10 @@ var LikePage = function (_Component) {
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
+                console.log(data);
                 if (data.status === 1) {
                     that.setState({
-                        like: data.like
+                        likes: data.like
                     });
                 }
             });
@@ -27718,7 +27719,7 @@ var LikePage = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'head-pic' },
-                            _react2.default.createElement('img', { src: e.pic }),
+                            _react2.default.createElement('img', { src: e.headPic }),
                             _react2.default.createElement(
                                 'span',
                                 null,
