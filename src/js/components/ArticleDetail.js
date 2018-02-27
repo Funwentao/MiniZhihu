@@ -108,7 +108,8 @@ class ArticleDetail extends Component{
         const that = this;
         const _id = location.href.match(/\/article_detail\S*\?/)[0].split('/')[2].slice(0,-1);
         const username = sessionStorage.getItem('__username__');
-        const url = '/api/collect' + '?_id=' + _id + '&username=' + username;
+        const type = location.href.match(/type\S*/)[0].split('=')[1];
+        const url = '/api/collect' + '?_id=' + _id + '&username=' + username + '&type=' + type;
         fetch(url,{
             method: 'GET',
             // 设置这个header，才能正确parse

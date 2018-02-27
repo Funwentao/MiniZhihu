@@ -8,17 +8,34 @@ class CollectionPage extends Component{
     constructor(){
         super();
         this.state = {
-            articles:[
-                {
-                    title:"这个优秀的演员终于红了",
-                    content:"这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了这个优秀的演员终于红了",
-                    type:"文章",
-                    time:"2018-1-26 1:31",
-                    agreement:4682,
-                    comments:465
-                }
-            ]
-        }
+            articles:[]
+        };
+        this._loadData = this._loadData.bind(this);
+    }
+    _loadData(){
+        const that = this;
+        const username = sessionStorage.getItem('__username__');
+        const url = '/api/getCollections' + '?username=' + username;
+        fetch(url,{
+            method: 'GET',
+            // 设置这个header，才能正确parse
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors'
+        }).then(function(resopnse){
+            return resopnse.json();
+        }).then(function(data){
+            if(data.status===1){
+                that.setState({
+                    articles:data.collections
+                })
+            }
+        })
+
+    }
+    componentDidMount(){
+        this._loadData();
     }
     render(){
         const {length} = this.state.articles;

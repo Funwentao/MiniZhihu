@@ -199,7 +199,7 @@ export default function (Router) {
         const author = article.author;
         const writer_user = await UserModel.findOne({username:author}).exec();
         const like = (user.like.indexOf(username)!==-1);
-        const collect = (user.collections.indexOf(_id)!==-1);
+        const collect = (user.collections.indexOf(_id + '|' + type)!==-1);
         ctx.body = {
             status:1,
             headPic:writer_user.headPic,
@@ -250,13 +250,13 @@ export default function (Router) {
     });
 
     router.get('/collect',async(ctx,next)=>{
-        const {_id,username} = ctx.request.query;
+        const {_id,username,type} = ctx.request.query;
         let user = await UserModel.findOne({username}).exec();
         let collections = user.collections;
-        if(collections.indexOf(_id)===-1){
-            collections.push(_id)
+        if(collections.indexOf(_id + '|' + type)===-1){
+            collections.push(_id + '|' + type)
         }else{
-            let i = collections.indexOf(_id);
+            let i = collections.indexOf(_id + '|' + type);
             collections.splice(i,1);
         }
         user.collections = collections;
@@ -265,6 +265,24 @@ export default function (Router) {
             status:1,
             msg:'操作成功'
         }
+    });
+
+    router.get('/getCollections',async(ctx,next)=>{
+        const {username} = ctx.request.query;
+        let {collections} = await UserModel.findOne({username}).exec();
+        let c = [];
+        for(let i = 0,l = collections.length;i<l;i++){
+            let temp = collections[i].split('|');
+            let _id = temp[0],type = temp[1];
+            if(type==='article'){
+                let t = await ArticleModel.findOne({_id}).exec();
+                c.push(t);
+            }else{
+                let t = await QuestionModel.findOne({_id}).exec();
+                c.push(t);
+            }
+        }
+        ctx.body = {status:1,collections:c};
     });
     return router.routes();
 }

@@ -27352,10 +27352,39 @@ var CollectionPage = function (_Component) {
                 comments: 465
             }]
         };
+        _this._loadData = _this._loadData.bind(_this);
         return _this;
     }
 
     _createClass(CollectionPage, [{
+        key: '_loadData',
+        value: function _loadData() {
+            var that = this;
+            var username = sessionStorage.getItem('__username__');
+            var url = '/api/getCollections' + '?username=' + username;
+            fetch(url, {
+                method: 'GET',
+                // 设置这个header，才能正确parse
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors'
+            }).then(function (resopnse) {
+                return resopnse.json();
+            }).then(function (data) {
+                if (data.status === 1) {
+                    that.setState({
+                        articles: data.collections
+                    });
+                }
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._loadData();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var length = this.state.articles.length;

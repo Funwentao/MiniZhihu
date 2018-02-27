@@ -822,7 +822,8 @@ var ArticleDetail = function (_Component) {
             var that = this;
             var _id = location.href.match(/\/article_detail\S*\?/)[0].split('/')[2].slice(0, -1);
             var username = sessionStorage.getItem('__username__');
-            var url = '/api/collect' + '?_id=' + _id + '&username=' + username;
+            var type = location.href.match(/type\S*/)[0].split('=')[1];
+            var url = '/api/collect' + '?_id=' + _id + '&username=' + username + '&type=' + type;
             (0, _isomorphicFetch2.default)(url, {
                 method: 'GET',
                 // 设置这个header，才能正确parse
