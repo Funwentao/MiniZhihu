@@ -64,7 +64,7 @@ class Index extends Component{
                     write:false,
                     information:data.msg,
                     show:true
-                })
+                });
                 that._loadContent();
             }
         })

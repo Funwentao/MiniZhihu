@@ -707,7 +707,7 @@ var ArticleDetail = function (_Component) {
             headPic: '',
             title: '一个人智商高有多可怕',
             content: '静安寺放假了肯德基傅雷家书打疯了',
-            collect: 123,
+            be_collected: 123,
             type: 'article',
             like: true,
             collection: true,
@@ -746,6 +746,7 @@ var ArticleDetail = function (_Component) {
         };
         _this._loadData = _this._loadData.bind(_this);
         _this.showHandler = _this.showHandler.bind(_this);
+        _this.publish = _this.publish.bind(_this);
         return _this;
     }
 
@@ -767,10 +768,10 @@ var ArticleDetail = function (_Component) {
                 if (data.status === 1) {
                     that.setState({
                         like: data.like,
-                        collection: data.article.be_collect ? data.article.be_collect : 0,
+                        be_collected: data.article.be_collect ? data.article.be_collect : 0,
                         title: data.article.title,
                         content: data.article.content,
-                        collect: data.collect,
+                        collection: data.collect,
                         answer: data.article.comments || data.article.answer,
                         headPic: data.headPic,
                         type: data.article.type,
@@ -790,6 +791,20 @@ var ArticleDetail = function (_Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this._loadData();
+        }
+    }, {
+        key: 'publish',
+        value: function publish() {
+            var comment = this.text.value;
+            var url = '/api/publish_comment';
+            (0, _isomorphicFetch2.default)(url, {
+                method: 'POST',
+                // 设置这个header，才能正确parse
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'cors'
+            });
         }
     }, {
         key: 'render',
@@ -849,7 +864,7 @@ var ArticleDetail = function (_Component) {
                                 _react2.default.createElement(
                                     'span',
                                     null,
-                                    this.state.collect,
+                                    this.state.be_collected,
                                     ' \u4EBA\u6536\u85CF'
                                 ),
                                 _react2.default.createElement(
@@ -889,7 +904,7 @@ var ArticleDetail = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'a',
-                                    { href: 'javascript:;', className: 'btn right' },
+                                    { href: 'javascript:;', className: 'btn right', onClick: this.publish },
                                     '\u53D1\u5E03'
                                 )
                             ),

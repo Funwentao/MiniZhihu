@@ -27678,10 +27678,8 @@ var LikePage = function (_Component) {
         key: '_loadData',
         value: function _loadData() {
             var that = this;
-
-            var _sessionStorage$getIt = sessionStorage.getItem('__username__'),
-                username = _sessionStorage$getIt.username;
-
+            var username = sessionStorage.getItem('__username__');
+            console.log(username);
             var url = '/api/getMyLike' + '?username=' + username;
             (0, _isomorphicFetch2.default)(url, {
                 method: 'GET',

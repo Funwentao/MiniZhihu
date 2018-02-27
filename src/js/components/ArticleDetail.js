@@ -10,7 +10,7 @@ class ArticleDetail extends Component{
             headPic:'',
             title:'一个人智商高有多可怕',
             content:'静安寺放假了肯德基傅雷家书打疯了',
-            collect:123,
+            be_collected:123,
             type:'article',
             like:true,
             collection:true,
@@ -49,6 +49,7 @@ class ArticleDetail extends Component{
         };
         this._loadData = this._loadData.bind(this);
         this.showHandler = this.showHandler.bind(this);
+        this.publish = this.publish.bind(this);
     }
     _loadData(){
         const that = this;
@@ -66,10 +67,10 @@ class ArticleDetail extends Component{
             if(data.status === 1){
                 that.setState({
                     like:data.like,
-                    collection:data.article.be_collect?data.article.be_collect:0,
+                    be_collected:data.article.be_collect?data.article.be_collect:0,
                     title:data.article.title,
                     content:data.article.content,
-                    collect:data.collect,
+                    collection:data.collect,
                     answer:data.article.comments||data.article.answer,
                     headPic:data.headPic,
                     type:data.article.type,
@@ -85,6 +86,18 @@ class ArticleDetail extends Component{
     }
     componentDidMount(){
         this._loadData();
+    }
+    publish(){
+        const comment = this.text.value;
+        const url = '/api/publish_comment';
+        fetch(url,{
+            method: 'POST',
+            // 设置这个header，才能正确parse
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors'
+        })
     }
     render(){
         return(
@@ -104,7 +117,7 @@ class ArticleDetail extends Component{
                             <h1>{this.state.title}</h1>
                             <p>{this.state.content}</p>
                             <div className="tips">
-                                <span>{this.state.collect} 人收藏</span>
+                                <span>{this.state.be_collected} 人收藏</span>
                                 <span>{this.state.answer.length} 条{this.state.type==='article'?'评论':'回答'}</span>
                                 <a href="javascript:;" id="collect-btn" className={this.state.collection?'gray-btn':'blue-btn'}>{this.state.collection?'取消收藏':'收藏'}</a>
                             </div>
@@ -119,7 +132,7 @@ class ArticleDetail extends Component{
                             !this.state.show&&<div>
                                 <div className="comment-content">
                                     <a href="javascript:;" className="btn" onClick={this.showHandler}>取消</a>
-                                    <a href="javascript:;" className="btn right">发布</a>
+                                    <a href="javascript:;" className="btn right" onClick={this.publish}>发布</a>
                                 </div>
                                 <textarea id="comment-detail" ref={(text)=>this.text = text}/>
                             </div>

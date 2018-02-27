@@ -15,7 +15,8 @@ class LikePage extends Component{
     }
     _loadData(){
         const that = this;
-        const {username} = sessionStorage.getItem('__username__');
+        const username = sessionStorage.getItem('__username__');
+        console.log(username);
         const url = '/api/getMyLike' + '?username=' + username;
         fetch(url,{
             method: 'GET',

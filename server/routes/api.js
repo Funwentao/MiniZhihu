@@ -38,10 +38,11 @@ export default function (Router) {
                 } else {
                     const token = jwt.sign({name: user.username}, 'secret', {
                         expiresIn: 60*60  // token到期时间设置
-                    })
+                    });
                     user.token = token;
                     await user.save();
                     ctx.session.username = username;
+                    console.log(ctx.session)
                     ctx.body = { status: 1, msg: '登陆验证成功', token, username }
                 }
             }
@@ -207,6 +208,13 @@ export default function (Router) {
             collect
         };
     });
+
+    router.post('/publish_comment',async(ctx,next)=>{
+        ctx.body = {
+            username:ctx.session.username
+        }
+    });
+
 
     return router.routes();
 }
