@@ -1,0 +1,188 @@
+.layer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(49, 49, 49, 0.4);
+  z-index: 99999999;
+}
+.layer .children {
+  text-align: center;
+  background: #fff;
+  box-shadow: black 0 0 20px;
+  width: 90%;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.layer .children .close {
+  text-decoration: none;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  font-size: 24px;
+  color: black;
+}
+body {
+  background-color: #f5f5f9;
+  margin: 0;
+}
+body .gray-btn {
+  font-size: 12px;
+  color: #8e8e8e;
+  text-decoration: none;
+  padding: 5px 15px;
+  background: #ccc;
+  border-radius: 3px;
+}
+body .blue-btn {
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+  padding: 5px 15px;
+  background: #2589df;
+  border-radius: 3px;
+}
+body .author-tips {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #dfdfdf;
+  background: white;
+  vertical-align: middle;
+  color: #3e3e3e;
+}
+body .author-tips #back-btn {
+  color: #2589df;
+  text-decoration: none;
+  float: left;
+  margin-left: 5px;
+  position: relative;
+  top: 8px;
+}
+body .author-tips #back-btn div {
+  display: inline;
+  top: 1px;
+  position: relative;
+}
+body .author-tips #back-btn div .arrow-svg {
+  width: 18px;
+  height: 18px;
+}
+body .author-tips img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+body .author-tips span {
+  font-size: 14px;
+  margin-right: 10px;
+}
+body .author-tips a {
+  position: relative;
+  bottom: 10px;
+}
+body .article-content {
+  border-top: 1px solid #dfdfdf;
+  background: white;
+  color: #3e3e3e;
+}
+body .article-content .pd {
+  overflow: hidden;
+  padding: 10px;
+}
+body .article-content .pd h1 {
+  font-size: 20px;
+}
+body .article-content .pd span {
+  font-size: 12px;
+  color: #3e3e3e;
+}
+body .article-content .pd span:first-child {
+  margin-right: 15px;
+}
+body .article-content .pd #collect-btn {
+  float: right;
+}
+body .article-content #comment-btn {
+  color: #3e3e3e;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+}
+body .article-content #comment-btn div {
+  display: inline;
+  position: relative;
+  top: 1px;
+}
+body .article-content #comment-btn div svg {
+  width: 14px;
+  height: 14px;
+}
+body .article-content #comment-btn div svg g {
+  fill: #3e3e3e;
+}
+body .article-content .comment-content {
+  border-top: 1px solid #dfdfdf ;
+  border-bottom: 1px solid #dfdfdf;
+}
+body .article-content .comment-content .btn {
+  font-size: 14px;
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 12px 0;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+body .article-content .comment-content .right {
+  border-left: 1px solid #dfdfdf;
+}
+body .article-content #comment-detail {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  height: 100px;
+  font-size: 14px;
+  border-bottom: 1px solid #dfdfdf;
+}
+body .answer-content {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+body .answer-content .answer-item {
+  padding: 10px;
+  background: white;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  margin-bottom: 10px;
+  color: #3e3e3e;
+}
+body .answer-content .answer-item .answer-tips img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+body .answer-content .answer-item .answer-tips span {
+  margin-left: 5px;
+  font-size: 12px;
+}
+body .answer-content .answer-item .answer-content {
+  margin: 0;
+}
+body .no-comment {
+  text-align: center;
+  color: #bfbfbf;
+}
