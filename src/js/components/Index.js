@@ -90,6 +90,7 @@ class Index extends Component{
         fetch(url, {
             method: 'GET',
             // 设置这个header，才能正确parse
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },

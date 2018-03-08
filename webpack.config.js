@@ -11,7 +11,8 @@ module.exports = {
         "my":'./src/js/containers/MyContainer.js',
         'questions':'./src/js/containers/MyQuestions.js',
         'articles':'./src/js/containers/MyArticles.js',
-        'articleDetail':'./src/js/containers/ArticleDetailContainer.js'
+        'articleDetail':'./src/js/containers/ArticleDetailContainer.js',
+        'vendor':['react','react-dom','antd-mobile']
     },
     output: {
         path: __dirname+"/dist",
@@ -31,13 +32,27 @@ module.exports = {
                     }
                 }
             },
+            // {
+            //     test: /\.css/,
+            //     loader: "style-loader!css-loader"
+            // },
+            // {
+            //     test: /\.less$/,
+            //     loader: "style-loader!css-loader!less-loader"
+            // },
             {
-                test: /\.css/,
-                loader: "style-loader!css-loader"
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
             {
                 test: /\.less$/,
-                loader: "style-loader!css-loader!less-loader"
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader!less-loader"
+                })
             },
             {
                 test:/\.svg/,
@@ -46,54 +61,66 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,
+            },
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+        }),
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
         new HtmlWebpackPlugin({
             title: '登录注册',
             filename: '../view/login.html',
             template: './template.html',
-            chunks:['login']
+            chunks:['login','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '首页',
             filename: '../view/index.html',
             template: './template.html',
-            chunks:['index']
+            chunks:['index','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '关注',
             filename: '../view/like.html',
             template: './template.html',
-            chunks:['like']
+            chunks:['like','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '收藏',
             filename: '../view/collection.html',
             template: './template.html',
-            chunks:['collection']
+            chunks:['collection','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '我的',
             filename: '../view/my.html',
             template: './template.html',
-            chunks:['my']
+            chunks:['my','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '我的提问',
             filename: '../view/questions.html',
             template: './template.html',
-            chunks:['questions']
+            chunks:['questions','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '我的文章',
             filename: '../view/articles.html',
             template: './template.html',
-            chunks:['articles']
+            chunks:['articles','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '详情',
             filename: '../view/article_detail.html',
             template: './template.html',
-            chunks:['articleDetail']
-        })
-        //new ExtractTextPlugin('[name].css')
+            chunks:['articleDetail','vendor']
+        }),
+        new ExtractTextPlugin('[name].css')
     ]
 }

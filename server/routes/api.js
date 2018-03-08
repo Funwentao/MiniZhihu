@@ -145,6 +145,7 @@ export default function (Router) {
     router.get(
         '/getAll',
         async(ctx,next)=>{
+            console.log(ctx.session.username,'all');
             const articles = await ArticleModel.find();
             const questions = await QuestionModel.find();
             let i = 0,j=0,all=[];
@@ -184,29 +185,34 @@ export default function (Router) {
     );
 
     router.get('/article_detail/:aid',async(ctx,next) => {
-        const _id = ctx.params.aid;
-        const {username,type} = ctx.request.query;
-        const user = await UserModel.findOne({username}).exec();
-        let article ;
-        if(type==='article'){
-            article = await ArticleModel.findOne({_id}).exec();
-            article.comments = article.comments.reverse();
-        }else{
-            article = await QuestionModel.findOne({_id}).exec();
-            article.answer = article.answer.reverse();
+        try{
+            const _id = ctx.params.aid;
+            const {username,type} = ctx.request.query;
+            const user = await UserModel.findOne({username}).exec();
+            let article ;
+            if(type==='article'){
+                article = await ArticleModel.findOne({_id}).exec();
+                article.comments = article.comments.reverse();
+            }else{
+                article = await QuestionModel.findOne({_id}).exec();
+                article.answer = article.answer.reverse();
+            }
+            const author = article.author;
+            const writer_user = await UserModel.findOne({username:author}).exec();
+            const like = (user.like.indexOf(username)!==-1);
+            const collect = (user.collections.indexOf(_id + '|' + type)!==-1);
+            ctx.body = {
+                status:1,
+                headPic:writer_user.headPic,
+                username:writer_user.username,
+                article,
+                like,
+                collect
+            };
+        }catch (e){
+            console.log(e.message)
         }
-        const author = article.author;
-        const writer_user = await UserModel.findOne({username:author}).exec();
-        const like = (user.like.indexOf(username)!==-1);
-        const collect = (user.collections.indexOf(_id + '|' + type)!==-1);
-        ctx.body = {
-            status:1,
-            headPic:writer_user.headPic,
-            username:writer_user.username,
-            article,
-            like,
-            collect
-        };
+
     });
 
     router.post('/publish_comment',async(ctx,next)=>{
@@ -231,21 +237,34 @@ export default function (Router) {
 
 
     router.get('/like',async(ctx,next)=>{
-        const {writer,username} = ctx.request.query;
-        let user= await UserModel.findOne({username}).exec();
-        let like = user.like;
-        if(like.indexOf(writer)===-1){
-            like.push(writer)
-        }else{
-            let i = like.indexOf(writer);
-            like.splice(i,1);
+        try{
+            const {writer,username} = ctx.request.query;
+            let user= await UserModel.findOne({username}).exec();
+            let like = user.like;
+            if(like.indexOf(writer)===-1){
+                like.push(writer);
+                await UserModel.update({username:writer},{$push:{beLiked:username}})
+            }else{
+                let i = like.indexOf(writer);
+                like.splice(i,1);
+                let temp = await UserModel.findOne({username:writer}).exec();
+                let beLiked = temp.beLiked;
+                console.log(beLiked);
+                let bi = beLiked.indexOf(username);
+                beLiked.splice(bi,1);
+                temp.beLiked = beLiked;
+                temp.save();
+            }
+            user.like = like;
+            user.save();
+            ctx.body = {
+                status:1,
+                msg:'操作成功'
+            }
+        }catch (e){
+            console.log(e.message);
         }
-        user.like = like;
-        user.save();
-        ctx.body = {
-            status:1,
-            msg:'操作成功'
-        }
+
     });
 
     router.get('/collect',async(ctx,next)=>{

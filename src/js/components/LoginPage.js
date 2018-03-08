@@ -94,6 +94,7 @@ class LoginPage extends Component{
         fetch(url, {
             method: 'POST',
             // 设置这个header，才能正确parse
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
